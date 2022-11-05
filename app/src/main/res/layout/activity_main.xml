@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/background_color">
+    android:background="@color/background_color"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/header"
@@ -24,6 +24,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.039" />
+
+    <TextView
+        android:id="@+id/spotPrice"
+        android:layout_width="230dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="124dp"
+        android:text="@string/spotPrice"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/spot_num"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:inputType="numberDecimal"
+        android:singleLine="false"
+        android:text="@string/input"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.181" />
 
     <TextView
         android:id="@+id/strikePrice"
@@ -68,20 +100,6 @@
         app:layout_constraintTop_toBottomOf="@+id/volatility"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/spotPrice"
-        android:layout_width="230dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="124dp"
-        android:text="@string/spotPrice"
-        android:textColor="@color/text_color"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/volatility"
@@ -98,22 +116,6 @@
         app:layout_constraintTop_toBottomOf="@+id/strikePrice"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/spot_num"
-        android:layout_width="70dp"
-        android:layout_height="48dp"
-        android:inputType="numberDecimal"
-        android:singleLine="false"
-        android:text="@string/input"
-        android:textAlignment="center"
-        android:textColor="@color/text_color"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181" />
 
     <EditText
         android:id="@+id/strike_num"

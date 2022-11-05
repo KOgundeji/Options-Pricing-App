@@ -9,9 +9,11 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="background_color">#F7F3F0F0</color>
-    <color name="button_color">#F7B9B9B9</color>
+    <color name="button_color">#00BCD4</color>
     <color name="text_color">#FF000000</color>
     <color name="button_text_color">#212121</color>
     <color name="call_color">#0000FF</color>
     <color name="put_color">#D50000</color>
+    <color name="box_stroke">#EA9C01</color>
+    <color name="input_background_color">#FFCC80</color>
 </resources>

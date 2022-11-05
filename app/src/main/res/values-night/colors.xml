@@ -6,5 +6,7 @@
     <color name="button_text_color">#FF000000</color>
     <color name="call_color">#EA9C01</color>
     <color name="put_color">#55B801</color>
+    <color name="box_stroke">#EA9C01</color>
+    <color name="input_background_color">#FF4081</color>
 
 </resources>
