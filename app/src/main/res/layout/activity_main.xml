@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/background_color">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="336dp"
+        android:layout_height="53dp"
+        android:fontFamily="@font/adamina"
+        android:gravity="center"
+        android:text="@string/header"
+        android:textAllCaps="false"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.039" />
+
+    <TextView
+        android:id="@+id/strikePrice"
+        android:layout_width="230dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/strikePrice"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spotPrice" />
+
+    <TextView
+        android:id="@+id/expiration"
+        android:layout_width="230dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/expiration"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rfRate"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/rfRate"
+        android:layout_width="230dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/rfRate"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volatility"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/spotPrice"
+        android:layout_width="230dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="124dp"
+        android:text="@string/spotPrice"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/volatility"
+        android:layout_width="230dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/volatility"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/strikePrice"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/spot_num"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:inputType="numberDecimal"
+        android:singleLine="false"
+        android:text="@string/input"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.181" />
+
+    <EditText
+        android:id="@+id/strike_num"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:inputType="numberDecimal"
+        android:text="@string/input"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spot_num"
+        app:layout_constraintVertical_bias="0.015" />
+
+    <EditText
+        android:id="@+id/vol_num"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:inputType="numberDecimal"
+        android:text="@string/input"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/strike_num"
+        app:layout_constraintVertical_bias="0.017" />
+
+    <EditText
+        android:id="@+id/rfRate_num"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:inputType="numberDecimal"
+        android:text="@string/input"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vol_num"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <EditText
+        android:id="@+id/expiration_num"
+        android:layout_width="70dp"
+        android:layout_height="48dp"
+        android:inputType="number"
+        android:text="@string/input"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.818"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rfRate_num"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/calculate"
+        android:layout_width="125dp"
+        android:layout_height="64dp"
+        android:background="@color/button_color"
+        android:elegantTextHeight="false"
+        android:onClick="calculate"
+        android:text="@string/calculate"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/clear"
+        app:layout_constraintHorizontal_bias="0.244"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.67" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/clear"
+        android:layout_width="125dp"
+        android:layout_height="64dp"
+        android:background="@color/button_color"
+        android:onClick="clear"
+        android:text="@string/clear"
+        android:textColor="@color/button_text_color"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.734"
+        app:layout_constraintStart_toEndOf="@+id/calculate"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.67" />
+
+    <TextView
+        android:id="@+id/callLabel"
+        android:layout_width="156dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="@string/callLabel"
+        android:textColor="@color/call_color"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/putLabel"
+        app:layout_constraintHorizontal_bias="0.149"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calculate"
+        app:layout_constraintVertical_bias="0.144" />
+
+    <TextView
+        android:id="@+id/call_price"
+        android:layout_width="124dp"
+        android:layout_height="43dp"
+        android:gravity="center"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.188"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/callLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/put_price"
+        android:layout_width="124dp"
+        android:layout_height="43dp"
+        android:gravity="center"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/putLabel"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/putLabel"
+        android:layout_width="156dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="@string/putLabel"
+        android:textColor="@color/put_color"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintStart_toEndOf="@+id/callLabel"
+        app:layout_constraintTop_toBottomOf="@+id/clear"
+        app:layout_constraintVertical_bias="0.144" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
