@@ -1,272 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_color"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:fontFamily="@font/adamina"
-        android:gravity="center"
-        android:text="@string/header"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039" />
-
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="325dp">
+        android:background="@color/background_color"
+        tools:context=".MainActivity">
 
-        <TableRow>
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:fontFamily="@font/adamina"
+            android:gravity="center"
+            android:text="@string/header"
+            android:textColor="@color/text_color"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.039" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/spotPrice"
-                android:layout_width="@dimen/input_width"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/input_margin_start"
-                android:hint="@string/spotPrice"
-                app:prefixText="$"
-                app:hintTextColor="@color/hint_color"
-                app:boxStrokeColor="@color/box_stroke"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:boxBackgroundColor="@color/input_background_color">
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="325dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/spot_num"
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/spotPrice"
+                    android:layout_width="@dimen/input_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/input_margin_start"
+                    android:hint="@string/spotPrice"
+                    app:prefixText="$"
+                    app:hintTextColor="@color/hint_color"
+                    app:boxStrokeColor="@color/box_stroke"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:boxBackgroundColor="@color/input_background_color">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/spot_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/input_text_size" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
+
+            <TableRow>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/strikePrice"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/input_text_size" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/input_margin_start"
+                    android:hint="@string/strikePrice"
+                    app:hintTextColor="@color/hint_color"
+                    app:boxStrokeColor="@color/box_stroke"
+                    app:boxBackgroundColor="@color/input_background_color">
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </TableRow>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/strike_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:layout_marginTop="10dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/input_text_size" />
 
-        <TableRow>
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/strikePrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/input_margin_start"
-                android:hint="@string/strikePrice"
-                app:hintTextColor="@color/hint_color"
-                app:boxStrokeColor="@color/box_stroke"
-                app:boxBackgroundColor="@color/input_background_color">
+            <TableRow>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/strike_num"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/volatility"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:layout_marginTop="10dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/input_text_size" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/input_margin_start"
+                    android:hint="@string/volatility"
+                    app:hintTextColor="@color/hint_color"
+                    app:boxStrokeColor="@color/box_stroke"
+                    app:boxBackgroundColor="@color/input_background_color">
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </TableRow>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/vol_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/input_text_size" />
 
-        <TableRow>
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/volatility"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/input_margin_start"
-                android:hint="@string/volatility"
-                app:hintTextColor="@color/hint_color"
-                app:boxStrokeColor="@color/box_stroke"
-                app:boxBackgroundColor="@color/input_background_color">
+            <TableRow>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/vol_num"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/rfRate"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:layout_marginTop="10dp"
-                    android:inputType="number"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/input_text_size" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/input_margin_start"
+                    android:hint="@string/rfRate"
+                    app:hintTextColor="@color/hint_color"
+                    app:boxStrokeColor="@color/box_stroke"
+                    app:boxBackgroundColor="@color/input_background_color">
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </TableRow>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rfRate_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:layout_marginTop="10dp"
+                        android:inputType="numberDecimal"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/input_text_size" />
 
-        <TableRow>
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/rfRate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/input_margin_start"
-                android:hint="@string/rfRate"
-                app:hintTextColor="@color/hint_color"
-                app:boxStrokeColor="@color/box_stroke"
-                app:boxBackgroundColor="@color/input_background_color">
+            <TableRow>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/rfRate_num"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/expiration"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:layout_marginTop="10dp"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/input_text_size" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/input_margin_start"
+                    android:hint="@string/expiration"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/calendar_foreground"
+                    app:endIconCheckable="true"
+                    app:hintTextColor="@color/hint_color"
+                    app:boxStrokeColor="@color/box_stroke"
+                    app:boxBackgroundColor="@color/input_background_color">
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </TableRow>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/expiration_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/input_height"
+                        android:layout_marginTop="10dp"
+                        android:inputType="number"
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/input_text_size"
 
-        <TableRow>
+                        />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/expiration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/input_margin_start"
-                android:hint="@string/expiration"
-                app:endIconMode="custom"
-                app:endIconDrawable="@drawable/calendar_foreground"
-                app:endIconCheckable="true"
-                app:hintTextColor="@color/hint_color"
-                app:boxStrokeColor="@color/box_stroke"
-                app:boxBackgroundColor="@color/input_background_color">
+                </com.google.android.material.textfield.TextInputLayout>
+            </TableRow>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/expiration_num"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:layout_marginTop="10dp"
-                    android:inputType="number"
-                    android:textColor="@color/text_color"
-                    android:textSize="@dimen/input_text_size"
+        </TableLayout>
 
-                    />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="265dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="325dp"
+            android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
-        </TableRow>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/calculate"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="64dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/button_color"
+                android:onClick="calculate"
+                android:text="@string/calculate"
+                android:textColor="@color/button_text_color"
+                android:textSize="@dimen/input_text_size" />
 
-    </TableLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/clear"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="64dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/button_color"
+                android:onClick="clear"
+                android:text="@string/clear"
+                android:textColor="@color/button_text_color"
+                android:textSize="@dimen/input_text_size" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="265dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="325dp"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/calculate"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/button_color"
-            android:onClick="calculate"
-            android:text="@string/calculate"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/input_text_size" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/clear"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="64dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/button_color"
-            android:onClick="clear"
-            android:text="@string/clear"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/input_text_size" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/save"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="64dp"
-            android:layout_marginTop="30dp"
-            android:background="@color/button_color"
-            android:onClick="saved"
-            android:text="@string/save"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/input_text_size" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/save"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="64dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/button_color"
+                android:onClick="saved"
+                android:text="@string/save"
+                android:textColor="@color/button_text_color"
+                android:textSize="@dimen/input_text_size" />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/callLabel"
-        android:layout_width="156dp"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="@string/callLabel"
-        android:textColor="@color/call_color"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/callLabel"
+            android:layout_width="156dp"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text="@string/callLabel"
+            android:textColor="@color/call_color"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.615" />
 
-    <TextView
-        android:id="@+id/putLabel"
-        android:layout_width="156dp"
-        android:layout_height="52dp"
-        android:gravity="center"
-        android:text="@string/putLabel"
-        android:textColor="@color/put_color"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615" />
+        <TextView
+            android:id="@+id/putLabel"
+            android:layout_width="156dp"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:text="@string/putLabel"
+            android:textColor="@color/put_color"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.615" />
 
-    <TextView
-        android:id="@+id/call_price"
-        android:layout_width="156dp"
-        android:layout_height="43dp"
-        android:gravity="center"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        <TextView
+            android:id="@+id/call_price"
+            android:layout_width="156dp"
+            android:layout_height="43dp"
+            android:gravity="center"
+            android:textColor="@color/text_color"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.705" />
 
-    <TextView
-        android:id="@+id/put_price"
-        android:layout_width="156dp"
-        android:layout_height="43dp"
-        android:gravity="center"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.705" />
+        <TextView
+            android:id="@+id/put_price"
+            android:layout_width="156dp"
+            android:layout_height="43dp"
+            android:gravity="center"
+            android:textColor="@color/text_color"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.705" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

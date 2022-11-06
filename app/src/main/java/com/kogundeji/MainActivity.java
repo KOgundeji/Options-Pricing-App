@@ -1,41 +1,37 @@
 package com.kogundeji;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingComponent;
+import androidx.databinding.DataBindingUtil;
+
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.kogundeji.databinding.ActivityMainLayoutsBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView call, put;
-    private EditText spot_num, strike_num, vol_num, rfRate_num, expiration_num;
-    private TextInputLayout test;
+    private ActivityMainLayoutsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layouts);
-        spot_num = findViewById(R.id.spot_num);
-        strike_num = findViewById(R.id.strike_num);
-        vol_num = findViewById(R.id.vol_num);
-        rfRate_num = findViewById(R.id.rfRate_num);
-        expiration_num = findViewById(R.id.expiration_num);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main_layouts);
 
-        call = findViewById(R.id.call_price);
-        put = findViewById(R.id.put_price);
-
-        test = findViewById(R.id.expiration);
-        test.setEndIconOnClickListener(new View.OnClickListener() {
+        binding.expiration.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar c = Calendar.getInstance();
@@ -50,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year,
                                                   int monthOfYear, int dayOfMonth) {
-                                expiration_num.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                binding.expirationNum.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
                             }
                         },
@@ -61,16 +57,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculate(View view) {
-        call.setText(calc_call());
-        put.setText(calc_put());
+        binding.callPrice.setText(calc_call());
+        binding.putPrice.setText(calc_put());
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
     public void clear(View view) {
-        spot_num.setText("");
-        strike_num.setText("");
-        vol_num.setText("");
-        rfRate_num.setText("");
-        expiration_num.setText("");
+        binding.spotNum.setText("");
+        binding.strikeNum.setText("");
+        binding.volNum.setText("");
+        binding.rfRateNum.setText("");
+        binding.expirationNum.setText("");
     }
 
     public void saved(View view) {
@@ -81,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
-            double spotD = Double.parseDouble(String.valueOf(spot_num.getText()));
-            double strikeD = Double.parseDouble(String.valueOf(strike_num.getText()));
-            double rfD = Double.parseDouble(String.valueOf(rfRate_num.getText())) / 100;
-            double volD = Double.parseDouble(String.valueOf(vol_num.getText())) / 100;
-            double timeD = Double.parseDouble(String.valueOf(expiration_num.getText())) / 365;
+            double spotD = Double.parseDouble(String.valueOf(binding.spotNum.getText()));
+            double strikeD = Double.parseDouble(String.valueOf(binding.strikeNum.getText()));
+            double rfD = Double.parseDouble(String.valueOf(binding.rfRateNum.getText())) / 100;
+            double volD = Double.parseDouble(String.valueOf(binding.volNum.getText())) / 100;
+            double timeD = Double.parseDouble(String.valueOf(binding.expirationNum.getText())) / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
             double delta_second_part = timeD * (rfD + Math.pow(volD, 2) / 2);
@@ -116,11 +115,11 @@ public class MainActivity extends AppCompatActivity {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
-            double spotD = Double.parseDouble(String.valueOf(spot_num.getText()));
-            double strikeD = Double.parseDouble(String.valueOf(strike_num.getText()));
-            double rfD = Double.parseDouble(String.valueOf(rfRate_num.getText())) / 100;
-            double volD = Double.parseDouble(String.valueOf(vol_num.getText())) / 100;
-            double timeD = Double.parseDouble(String.valueOf(expiration_num.getText())) / 365;
+            double spotD = Double.parseDouble(String.valueOf(binding.spotNum.getText()));
+            double strikeD = Double.parseDouble(String.valueOf(binding.strikeNum.getText()));
+            double rfD = Double.parseDouble(String.valueOf(binding.rfRateNum.getText())) / 100;
+            double volD = Double.parseDouble(String.valueOf(binding.volNum.getText())) / 100;
+            double timeD = Double.parseDouble(String.valueOf(binding.expirationNum.getText())) / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
             double delta_second_part = timeD * (rfD + Math.pow(volD, 2) / 2);
