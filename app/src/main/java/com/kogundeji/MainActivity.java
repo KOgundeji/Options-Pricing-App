@@ -3,16 +3,23 @@ package com.kogundeji;
 import androidx.appcompat.app.AppCompatActivity;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView call, put;
     private EditText spot_num, strike_num, vol_num, rfRate_num, expiration_num;
+    private TextInputLayout test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,31 @@ public class MainActivity extends AppCompatActivity {
 
         call = findViewById(R.id.call_price);
         put = findViewById(R.id.put_price);
+
+        test = findViewById(R.id.expiration);
+        test.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar c = Calendar.getInstance();
+
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                expiration_num.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                            }
+                        },
+                        year, month, day);
+                datePickerDialog.show();
+            }
+        });
     }
 
     public void calculate(View view) {
@@ -39,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
         vol_num.setText("");
         rfRate_num.setText("");
         expiration_num.setText("");
+    }
+
+    public void saved(View view) {
+        startActivity(new Intent(MainActivity.this,SaveActivity.class));
     }
 
     public String calc_call() {

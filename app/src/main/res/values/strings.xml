@@ -11,9 +11,11 @@
     <string name="putLabel">Put Price</string>
     <string name="calculate">Calculate</string>
     <string name="clear">Clear</string>
-    <string name="save">Save</string>
+    <string name="save">Saved Options</string>
 
     <string name="input"></string>
+
+    <string name="saved_options">Saved Options</string>
 
     <string name="font_size">20sp</string>
 </resources>
