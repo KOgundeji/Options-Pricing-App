@@ -5,8 +5,8 @@
     <color name="text_color">#E6E6E6</color>
     <color name="hint_color">#EA9C01</color>
     <color name="button_text_color">#FF000000</color>
-    <color name="call_color">#EA9C01</color>
-    <color name="put_color">#55B801</color>
+    <color name="call_color">#CDCDCD</color>
+    <color name="put_color">#EA9C01</color>
     <color name="box_stroke">#EA9C01</color>
     <color name="input_background_color">#6B9ABCFF</color>
 
