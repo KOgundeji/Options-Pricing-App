@@ -2,16 +2,19 @@
 
     <string name="app_name">Options Calculator</string>
     <string name="header">Options Pricing Calculator</string>
-    <string name="spotPrice">Current Price ($)</string>
-    <string name="strikePrice">Strike Price ($)</string>
+    <string name="spotPrice">Current Price</string>
+    <string name="strikePrice">Strike Price</string>
     <string name="volatility">Volatility (%)</string>
     <string name="rfRate">Risk-free rate (%)</string>
-    <string name="expiration">Days until expiration</string>
+    <string name="expiration">Expiration Date</string>
     <string name="callLabel">Call Price</string>
     <string name="putLabel">Put Price</string>
     <string name="calculate">Calculate</string>
     <string name="clear">Clear</string>
     <string name="save">Saved Options</string>
+    <string name="prefix_dollar">$</string>
+    <string name="suffix_percent">%</string>
+    <string name="expiration_hint">Date format: mm/dd/yyyy</string>
 
     <string name="input"></string>
 

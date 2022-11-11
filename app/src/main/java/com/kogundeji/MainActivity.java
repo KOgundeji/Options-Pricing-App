@@ -21,6 +21,10 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.kogundeji.databinding.ActivityMainLayoutsBinding;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainLayoutsBinding binding;
@@ -31,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_layouts);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main_layouts);
 
+        binding.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,SaveActivity.class);
+                startActivity(intent);
+            }
+        });
+
         binding.expiration.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,15 +51,18 @@ public class MainActivity extends AppCompatActivity {
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
+                String today = day + "-" + (month + 1) + "-" + year;
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         MainActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                binding.expirationNum.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            public void onDateSet(DatePicker view, int exp_year,
+                                                  int exp_month, int exp_day) {
 
+                                String date = (exp_month + 1) + "/" + exp_day + "/" + exp_year;
+
+                                binding.expirationNum.setText(date);
                             }
                         },
                         year, month, day);
@@ -56,12 +71,44 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void calculate(View view) {
-        binding.callPrice.setText(calc_call());
-        binding.putPrice.setText(calc_put());
+    public int getDays() {
 
+        final Calendar c = Calendar.getInstance();
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        String today = (month + 1) + "/" + day + "/" + year;
+        String future = binding.expirationNum.getText().toString().trim();
+
+        try {
+            SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
+            Date today_date = simple.parse(today);
+            Date future_date = simple.parse(future);
+
+            long calc = future_date.getTime() - today_date.getTime();
+            int difference = (int) (calc / (24*60*60*1000));
+            Log.d("Testing expiration", "days: " + difference);
+            return difference;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("Testing expiration", "Parse Exception");
+        }
+        return -1;
+    }
+
+    public void calculate(View view) {
+
+        if (getDays() >= 0) {
+            binding.callPrice.setText(calc_call());
+            binding.putPrice.setText(calc_put());
+            Log.d("Testing days", "Positive # of days");
+        }
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+
     }
 
     public void clear(View view) {
@@ -72,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
         binding.expirationNum.setText("");
     }
 
-    public void saved(View view) {
-        startActivity(new Intent(MainActivity.this,SaveActivity.class));
-    }
-
     public String calc_call() {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
@@ -84,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             double strikeD = Double.parseDouble(String.valueOf(binding.strikeNum.getText()));
             double rfD = Double.parseDouble(String.valueOf(binding.rfRateNum.getText())) / 100;
             double volD = Double.parseDouble(String.valueOf(binding.volNum.getText())) / 100;
-            double timeD = Double.parseDouble(String.valueOf(binding.expirationNum.getText())) / 365;
+            double timeD = (double) getDays() / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
             double delta_second_part = timeD * (rfD + Math.pow(volD, 2) / 2);
@@ -119,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             double strikeD = Double.parseDouble(String.valueOf(binding.strikeNum.getText()));
             double rfD = Double.parseDouble(String.valueOf(binding.rfRateNum.getText())) / 100;
             double volD = Double.parseDouble(String.valueOf(binding.volNum.getText())) / 100;
-            double timeD = Double.parseDouble(String.valueOf(binding.expirationNum.getText())) / 365;
+            double timeD = (double) getDays() / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
             double delta_second_part = timeD * (rfD + Math.pow(volD, 2) / 2);
