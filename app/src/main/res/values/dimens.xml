@@ -3,8 +3,11 @@
     <dimen name="input_width">220dp</dimen>
     <dimen name="input_height">56dp</dimen>
     <dimen name="input_text_size">16sp</dimen>
+    <dimen name="option_list_text_size">18dp</dimen>
     <dimen name="input_margin_start">20dp</dimen>
     <dimen name="button_width">100dp</dimen>
+
+    <dimen name="saved_act_min_width">100dp</dimen>
 
 
 </resources>

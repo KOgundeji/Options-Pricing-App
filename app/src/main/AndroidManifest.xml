@@ -26,7 +26,6 @@
             android:name=".SaveActivity"
             android:label="@string/saved_options">
         </activity>
-
     </application>
 
 </manifest>

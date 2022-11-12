@@ -1,94 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="53dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/adamina"
-        android:gravity="center"
-        android:text="@string/saved_options"
-        android:textColor="@color/text_color"
-        android:textSize="24sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginBottom="600dp">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/addOption"
-            android:layout_width="175dp"
-            android:layout_height="50dp"
-            android:background="@color/button_color"
-            android:onClick="addOptions"
-            android:textAllCaps="false"
-            android:text="+ Add Options to List"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/input_text_size" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/addOption"
-            android:layout_width="175dp"
-            android:layout_height="50dp"
-            android:background="@color/button_color"
-            android:onClick="deleteOptions"
-            android:layout_marginStart="15dp"
-            android:textAllCaps="false"
-            android:text="- Delete Options to List"
-            android:textColor="@color/button_text_color"
-            android:textSize="@dimen/input_text_size" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="265dp"
-        android:layout_height="51dp"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:text="Options"
-        android:textStyle="bold|italic"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="150dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="144dp"
-        android:layout_height="51dp"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:text="Call/Put Price"
-        android:textStyle="bold|italic"
-        tools:layout_editor_absoluteX="266dp"
-        tools:layout_editor_absoluteY="150dp" />
-
-    <LinearLayout
-        android:layout_width="382dp"
-        android:layout_height="622dp"
-        android:layout_marginTop="125dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="13dp">
+        android:background="@color/background_color">
 
         <TextView
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="606dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/adamina"
+            android:gravity="center"
+            android:text="@string/saved_options"
+            android:textColor="@color/text_color"
+            android:textSize="24sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/addOption"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@color/button_color"
+                android:minWidth="@dimen/saved_act_min_width"
+                android:onClick="addOptions"
+                android:text="@string/add_option_string"
+                android:textAllCaps="false"
+                android:textColor="@color/button_text_color"
+                android:textSize="@dimen/input_text_size" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/deleteOption"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/button_color"
+                android:minWidth="@dimen/saved_act_min_width"
+                android:onClick="deleteOptions"
+                android:text="@string/delete_option_string"
+                android:textAllCaps="false"
+                android:textColor="@color/button_text_color"
+                android:textSize="@dimen/input_text_size" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/editOption"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/button_color"
+                android:minWidth="@dimen/saved_act_min_width"
+                android:onClick="editOptions"
+                android:text="@string/edit_option_string"
+                android:textAllCaps="false"
+                android:textColor="@color/button_text_color"
+                android:textSize="@dimen/input_text_size" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/options_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="150dp"/>
+        </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

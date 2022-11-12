@@ -15,10 +15,9 @@
     <string name="prefix_dollar">$</string>
     <string name="suffix_percent">%</string>
     <string name="expiration_hint">Date format: mm/dd/yyyy</string>
-
-    <string name="input"></string>
-
     <string name="saved_options">Saved Options</string>
-
     <string name="font_size">20sp</string>
+    <string name="delete_option_string">Delete</string>
+    <string name="add_option_string">Add</string>
+    <string name="edit_option_string">Edit</string>
 </resources>

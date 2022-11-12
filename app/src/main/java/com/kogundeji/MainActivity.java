@@ -1,7 +1,6 @@
 package com.kogundeji;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingComponent;
 import androidx.databinding.DataBindingUtil;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -15,11 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputLayout;
-import com.kogundeji.databinding.ActivityMainLayoutsBinding;
+import com.kogundeji.databinding.ActivityMainBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,23 +23,20 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainLayoutsBinding binding;
+    private ActivityMainBinding bindMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_layouts);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main_layouts);
+        setContentView(R.layout.activity_main);
+        bindMain = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        binding.save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,SaveActivity.class);
-                startActivity(intent);
-            }
+        bindMain.save.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this,SaveActivity.class);
+            startActivity(intent);
         });
 
-        binding.expiration.setEndIconOnClickListener(new View.OnClickListener() {
+        bindMain.expiration.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar c = Calendar.getInstance();
@@ -51,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                String today = day + "-" + (month + 1) + "-" + year;
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         MainActivity.this,
@@ -62,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 String date = (exp_month + 1) + "/" + exp_day + "/" + exp_year;
 
-                                binding.expirationNum.setText(date);
+                                bindMain.expirationNum.setText(date);
                             }
                         },
                         year, month, day);
@@ -80,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         String today = (month + 1) + "/" + day + "/" + year;
-        String future = binding.expirationNum.getText().toString().trim();
+        String future = bindMain.expirationNum.getText().toString().trim();
 
         try {
             SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
@@ -102,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
     public void calculate(View view) {
 
         if (getDays() >= 0) {
-            binding.callPrice.setText(calc_call());
-            binding.putPrice.setText(calc_put());
+            bindMain.callPrice.setText(calc_call());
+            bindMain.putPrice.setText(calc_put());
             Log.d("Testing days", "Positive # of days");
         }
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -112,21 +104,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clear(View view) {
-        binding.spotNum.setText("");
-        binding.strikeNum.setText("");
-        binding.volNum.setText("");
-        binding.rfRateNum.setText("");
-        binding.expirationNum.setText("");
+        bindMain.spotNum.setText("");
+        bindMain.strikeNum.setText("");
+        bindMain.volNum.setText("");
+        bindMain.rfRateNum.setText("");
+        bindMain.expirationNum.setText("");
     }
 
     public String calc_call() {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
-            double spotD = Double.parseDouble(String.valueOf(binding.spotNum.getText()));
-            double strikeD = Double.parseDouble(String.valueOf(binding.strikeNum.getText()));
-            double rfD = Double.parseDouble(String.valueOf(binding.rfRateNum.getText())) / 100;
-            double volD = Double.parseDouble(String.valueOf(binding.volNum.getText())) / 100;
+            double spotD = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()));
+            double strikeD = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()));
+            double rfD = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText())) / 100;
+            double volD = Double.parseDouble(String.valueOf(bindMain.volNum.getText())) / 100;
             double timeD = (double) getDays() / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
@@ -158,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
-            double spotD = Double.parseDouble(String.valueOf(binding.spotNum.getText()));
-            double strikeD = Double.parseDouble(String.valueOf(binding.strikeNum.getText()));
-            double rfD = Double.parseDouble(String.valueOf(binding.rfRateNum.getText())) / 100;
-            double volD = Double.parseDouble(String.valueOf(binding.volNum.getText())) / 100;
+            double spotD = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()));
+            double strikeD = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()));
+            double rfD = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText())) / 100;
+            double volD = Double.parseDouble(String.valueOf(bindMain.volNum.getText())) / 100;
             double timeD = (double) getDays() / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);

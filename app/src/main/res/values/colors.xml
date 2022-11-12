@@ -17,4 +17,5 @@
     <color name="put_color">#D50000</color>
     <color name="box_stroke">#EA9C01</color>
     <color name="input_background_color">#FFFFFF</color>
+    <color name="options_list_color">#FF000000</color>
 </resources>
