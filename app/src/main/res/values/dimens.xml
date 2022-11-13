@@ -7,7 +7,7 @@
     <dimen name="input_margin_start">20dp</dimen>
     <dimen name="button_width">100dp</dimen>
 
-    <dimen name="saved_act_min_width">100dp</dimen>
+    <dimen name="saved_act_min_width">80dp</dimen>
 
 
 </resources>

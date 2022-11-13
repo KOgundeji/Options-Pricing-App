@@ -1,7 +1,5 @@
 package com.kogundeji.Model;
 
-import java.util.Date;
-
 public class Option {
     public static final int CALL = 0;
     public static final int PUT = 1;

@@ -19,7 +19,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> {
+
     private ArrayList<Option> optionList;
+    private int selectedPos = RecyclerView.NO_POSITION;
+    private int previouslySelected = RecyclerView.NO_POSITION - 1;
 
     public SaveAdapter(ArrayList<Option> optionList) {
         this.optionList = optionList;
@@ -29,12 +32,15 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.activity_list_options,parent,false);
+                .inflate(R.layout.cardview_list_options,parent,false);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.itemView.setSelected(selectedPos == position);
+        holder.itemView.setBackgroundColor(selectedPos == position ? Color.GREEN:Color.TRANSPARENT);
+
         SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat simple2 = new SimpleDateFormat("MMM dd yyyy");
 
@@ -51,18 +57,22 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        if (position % 2 == 0) {
-            holder.cardView.setCardBackgroundColor(Color.LTGRAY);
-        } else {
-            holder.cardView.setCardBackgroundColor(Color.WHITE);
-        }
+//        if (position % 2 == 0) {
+//            holder.cardView.setBackgroundResource(R.color.cardView_background_dark);
+//        } else {
+//            holder.cardView.setBackgroundResource(R.color.cardView_background_light);
+//        }
     }
 
     @Override
     public int getItemCount() {
         return optionList.size();
     }
+
+    public int getSelectedPos() {
+        return selectedPos;
+    }
+
 
     public String getStrikeString(double strike) {
         if ((int) strike == strike) {
@@ -71,7 +81,7 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
         return String.format("%,.1f",strike);
 
     }
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textView;
         private final CardView cardView;
 
@@ -79,6 +89,20 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
             super(itemView);
             textView = itemView.findViewById(R.id.list_options);
             cardView = itemView.findViewById(R.id.card_view_item);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            notifyItemChanged(selectedPos);
+            selectedPos = getLayoutPosition();
+            if (previouslySelected == selectedPos) {
+                selectedPos = RecyclerView.NO_POSITION;
+                previouslySelected = RecyclerView.NO_POSITION - 1;
+            } else {
+                previouslySelected = selectedPos;
+            }
+            notifyItemChanged(selectedPos);
         }
     }
 

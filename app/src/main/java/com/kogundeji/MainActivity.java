@@ -31,10 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bindMain = DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-        bindMain.save.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this,SaveActivity.class);
-            startActivity(intent);
-        });
+        bindMain.save.setOnClickListener(view -> sendToSavedOptions());
 
         bindMain.expiration.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    private void sendToSavedOptions() {
+        Intent intent = new Intent(MainActivity.this,SaveActivity.class);
+//        registerForActivityResult()
+        startActivity(intent);
     }
 
     public int getDays() {

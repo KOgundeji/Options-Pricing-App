@@ -18,4 +18,7 @@
     <color name="box_stroke">#EA9C01</color>
     <color name="input_background_color">#FFFFFF</color>
     <color name="options_list_color">#FF000000</color>
+    <color name="cardView_background_light">#FFFFFF</color>
+    <color name="cardView_background_dark">#F9FFB9</color>
+
 </resources>
