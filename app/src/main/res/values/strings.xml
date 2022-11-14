@@ -23,4 +23,5 @@
     <string name="add_option_string">Add</string>
     <string name="edit_option_string">Edit</string>
     <string name="open_option_string">Open</string>
+    <string name="drop_db_string">DROP TABLE IF EXISTS</string>
 </resources>

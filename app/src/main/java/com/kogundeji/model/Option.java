@@ -1,22 +1,32 @@
-package com.kogundeji.Model;
+package com.kogundeji.model;
 
 public class Option {
     public static final int CALL = 0;
     public static final int PUT = 1;
 
+    int id;
     String ticker_symbol, expiration;
-    int optionType;
     double current, strike, volatility, rfRate;
 
-    public Option(String ticker_symbol, int optionType,
+    public Option() {
+    }
+
+    public Option(String ticker_symbol,
                   double current, double strike, double volatility, double rfRate, String expiration) {
         this.ticker_symbol = ticker_symbol;
-        this.optionType = optionType;
         this.current = current;
         this.strike = strike;
         this.volatility = volatility;
         this.rfRate = rfRate;
         this.expiration = expiration;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTicker_symbol() {
@@ -25,21 +35,6 @@ public class Option {
 
     public void setTicker_symbol(String ticker_symbol) {
         this.ticker_symbol = ticker_symbol;
-    }
-
-    public int getOptionType() {
-        return optionType;
-    }
-
-    public String getOptionType_Letter() {
-        if (optionType == 0) {
-            return "C";
-        }
-        return "P";
-    }
-
-    public void setOptionType(int optionType) {
-        this.optionType = optionType;
     }
 
     public double getCurrent() {

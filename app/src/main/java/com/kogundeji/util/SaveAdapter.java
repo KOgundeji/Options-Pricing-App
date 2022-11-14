@@ -1,4 +1,4 @@
-package com.kogundeji.Model;
+package com.kogundeji.util;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kogundeji.model.Option;
 import com.kogundeji.R;
 
 import java.text.ParseException;
@@ -45,13 +46,12 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
         SimpleDateFormat simple2 = new SimpleDateFormat("MMM dd yyyy");
 
         String ticker = optionList.get(position).getTicker_symbol();
-        String type = optionList.get(position).getOptionType_Letter();
         double strike = optionList.get(position).getStrike();
 
         try {
             Date get_date = simple.parse(optionList.get(position).getExpiration());
             String reformatted_date = simple2.format(get_date);
-            String option_view = ticker + " " + getStrikeString(strike) + "" + type + " " + reformatted_date;
+            String option_view = ticker + " $" + getStrikeString(strike) + " " + reformatted_date;
             Log.d("Date Testing", "date: " + get_date + " date2: " + reformatted_date);
             holder.textView.setText(option_view);
         } catch (ParseException e) {

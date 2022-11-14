@@ -8,6 +8,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 
+import com.kogundeji.database.DatabaseHandler;
 import com.kogundeji.databinding.ActivityMainBinding;
+import com.kogundeji.model.Option;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +27,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding bindMain;
+    private DatabaseHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +62,27 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+        if (getIntent().getIntExtra("id",0) != 0) {
+            autoPopulate();
+        }
+    }
+
+    private void autoPopulate() {
+        db = new DatabaseHandler(this);
+
+        getIntent().getIntExtra("id",0);
+        Option openedOption = db.getOption(getIntent().getIntExtra("id",0));
+
+        bindMain.spotNum.setText(String.valueOf(openedOption.getCurrent()));
+        bindMain.strikeNum.setText(String.valueOf(openedOption.getStrike()));
+        bindMain.volNum.setText(String.valueOf(openedOption.getVolatility()));
+        bindMain.rfRateNum.setText(String.valueOf(openedOption.getRfRate()));
+        bindMain.expirationNum.setText(openedOption.getExpiration());
     }
 
     private void sendToSavedOptions() {
         Intent intent = new Intent(MainActivity.this,SaveActivity.class);
-//        registerForActivityResult()
         startActivity(intent);
     }
 
@@ -118,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
-            double spotD = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()));
-            double strikeD = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()));
-            double rfD = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText())) / 100;
-            double volD = Double.parseDouble(String.valueOf(bindMain.volNum.getText())) / 100;
+            double spotD = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim());
+            double strikeD = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim());
+            double rfD = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()) / 100;
+            double volD = Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()) / 100;
             double timeD = (double) getDays() / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
@@ -153,10 +173,10 @@ public class MainActivity extends AppCompatActivity {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
-            double spotD = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()));
-            double strikeD = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()));
-            double rfD = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText())) / 100;
-            double volD = Double.parseDouble(String.valueOf(bindMain.volNum.getText())) / 100;
+            double spotD = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim());
+            double strikeD = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim());
+            double rfD = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()) / 100;
+            double volD = Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()) / 100;
             double timeD = (double) getDays() / 365;
 
             double delta_first_part = Math.log(spotD / strikeD);
