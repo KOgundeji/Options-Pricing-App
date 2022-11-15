@@ -31,8 +31,8 @@ public class SaveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_save);
         bindSave = DataBindingUtil.setContentView(this,R.layout.activity_save);
         db = new DatabaseHandler(this);
-//        db.refreshTable();
-//        setDBExample();
+        db.refreshTable();
+        setDBExample();
         optionlist = db.getAllOptions();
 
         for (Option option:optionlist) {

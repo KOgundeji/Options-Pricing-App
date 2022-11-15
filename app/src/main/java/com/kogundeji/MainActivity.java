@@ -63,15 +63,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().getIntExtra("id",0) != 0) {
+        if (getIntent().getIntExtra("id",0) > 0) {
             autoPopulate();
         }
+
     }
 
     private void autoPopulate() {
         db = new DatabaseHandler(this);
-
-        getIntent().getIntExtra("id",0);
         Option openedOption = db.getOption(getIntent().getIntExtra("id",0));
 
         bindMain.spotNum.setText(String.valueOf(openedOption.getCurrent()));
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendToSavedOptions() {
         Intent intent = new Intent(MainActivity.this,SaveActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public int getDays() {

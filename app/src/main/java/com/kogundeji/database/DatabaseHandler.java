@@ -81,7 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Util.TABLE_NAME,
-                new String[]{Util.KEY_TICKER, Util.KEY_STRIKE, Util.KEY_CURRENT,
+                new String[]{Util.KEY_ID,Util.KEY_TICKER, Util.KEY_STRIKE, Util.KEY_CURRENT,
                         Util.KEY_VOL, Util.KEY_EXPIRATION, Util.KEY_RFRATE},
                 Util.KEY_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null);
@@ -96,7 +96,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             option.setVolatility(Double.parseDouble(cursor.getString(4)));
             option.setExpiration(cursor.getString(5));
             option.setRfRate(Double.parseDouble(cursor.getString(6)));
-
             db.close();
             return option;
         }

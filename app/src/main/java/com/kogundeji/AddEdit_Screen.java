@@ -3,6 +3,7 @@ package com.kogundeji;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -77,5 +78,8 @@ public class AddEdit_Screen extends AppCompatActivity {
         } else if (bindAddEdit.AddEditButton.getText() == "Edit") {
             db.updateOption(editedOption);
         }
+        Intent intent = new Intent(this, SaveActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
