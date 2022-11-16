@@ -17,7 +17,7 @@
             android:name=".AddEdit_Screen"
             android:exported="false" />
         <activity
-            android:name=".SaveActivity"
+            android:name=".SavedListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

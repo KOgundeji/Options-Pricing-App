@@ -73,7 +73,6 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
         return selectedPos;
     }
 
-
     public String getStrikeString(double strike) {
         if ((int) strike == strike) {
             return String.format("%,.0f",strike);
@@ -105,6 +104,4 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
             notifyItemChanged(selectedPos);
         }
     }
-
-
 }

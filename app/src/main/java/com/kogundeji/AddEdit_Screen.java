@@ -67,8 +67,9 @@ public class AddEdit_Screen extends AppCompatActivity {
     public void AddEdit(View view) {
         Option editedOption = new Option();
         editedOption.setId(getIntent().getIntExtra("id",0));
+//        editedOption.setTicker_symbol();
         editedOption.setCurrent(Double.parseDouble(String.valueOf(bindAddEdit.spotNumAddEdit.getText()).trim()));
-        editedOption.setCurrent(Double.parseDouble(String.valueOf(bindAddEdit.spotNumAddEdit.getText()).trim()));
+        editedOption.setStrike(Double.parseDouble(String.valueOf(bindAddEdit.strikeNumAddEdit.getText()).trim()));
         editedOption.setVolatility(Double.parseDouble(String.valueOf(bindAddEdit.volNumAddEdit.getText()).trim()));
         editedOption.setRfRate(Double.parseDouble(String.valueOf(bindAddEdit.rfRateNumAddEdit.getText()).trim()));
         editedOption.setExpiration(String.valueOf(bindAddEdit.expirationNumAddEdit.getText()).trim());
@@ -78,7 +79,7 @@ public class AddEdit_Screen extends AppCompatActivity {
         } else if (bindAddEdit.AddEditButton.getText() == "Edit") {
             db.updateOption(editedOption);
         }
-        Intent intent = new Intent(this, SaveActivity.class);
+        Intent intent = new Intent(this, SavedListActivity.class);
         startActivity(intent);
         finish();
     }

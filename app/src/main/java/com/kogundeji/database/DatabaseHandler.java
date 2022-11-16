@@ -15,7 +15,6 @@ import com.kogundeji.model.Option;
 import com.kogundeji.util.Util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     public DatabaseHandler(@Nullable Context context) {

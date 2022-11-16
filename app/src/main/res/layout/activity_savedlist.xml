@@ -35,17 +35,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addOption"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:background="@color/button_color"
-                android:minWidth="@dimen/saved_act_min_width"
-                android:onClick="addOptions"
-                android:text="@string/add_option_string"
-                android:textAllCaps="false"
-                android:textColor="@color/button_text_color"
-                android:textSize="@dimen/input_text_size" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/deleteOption"
@@ -56,19 +45,6 @@
                 android:minWidth="@dimen/saved_act_min_width"
                 android:onClick="deleteOptions"
                 android:text="@string/delete_option_string"
-                android:textAllCaps="false"
-                android:textColor="@color/button_text_color"
-                android:textSize="@dimen/input_text_size" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/editOption"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/button_color"
-                android:minWidth="@dimen/saved_act_min_width"
-                android:onClick="editOptions"
-                android:text="@string/edit_option_string"
                 android:textAllCaps="false"
                 android:textColor="@color/button_text_color"
                 android:textSize="@dimen/input_text_size" />

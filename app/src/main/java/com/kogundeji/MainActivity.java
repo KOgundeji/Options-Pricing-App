@@ -1,5 +1,6 @@
 package com.kogundeji;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -7,14 +8,15 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
 
 import com.kogundeji.database.DatabaseHandler;
 import com.kogundeji.databinding.ActivityMainBinding;
@@ -22,20 +24,24 @@ import com.kogundeji.model.Option;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding bindMain;
     private DatabaseHandler db;
+    final int[] selectedItem = {-1};
+    private EditText ticker_input;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bindMain = DataBindingUtil.setContentView(this,R.layout.activity_main);
-
-        bindMain.save.setOnClickListener(view -> sendToSavedOptions());
+        bindMain = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        db = new DatabaseHandler(this);
+        ticker_input = findViewById(R.id.ticker);
 
         bindMain.expiration.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,56 +69,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().getIntExtra("id",0) > 0) {
+        if (getIntent().getIntExtra("id", 0) > 0) {
             autoPopulate();
         }
-
     }
 
-    private void autoPopulate() {
-        db = new DatabaseHandler(this);
-        Option openedOption = db.getOption(getIntent().getIntExtra("id",0));
-
-        bindMain.spotNum.setText(String.valueOf(openedOption.getCurrent()));
-        bindMain.strikeNum.setText(String.valueOf(openedOption.getStrike()));
-        bindMain.volNum.setText(String.valueOf(openedOption.getVolatility()));
-        bindMain.rfRateNum.setText(String.valueOf(openedOption.getRfRate()));
-        bindMain.expirationNum.setText(openedOption.getExpiration());
-    }
-
-    private void sendToSavedOptions() {
-        Intent intent = new Intent(MainActivity.this,SaveActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public int getDays() {
-
-        final Calendar c = Calendar.getInstance();
-
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
-        String today = (month + 1) + "/" + day + "/" + year;
-        String future = bindMain.expirationNum.getText().toString().trim();
-
-        try {
-            SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
-            Date today_date = simple.parse(today);
-            Date future_date = simple.parse(future);
-
-            long calc = future_date.getTime() - today_date.getTime();
-            int difference = (int) (calc / (24*60*60*1000));
-            Log.d("Testing expiration", "days: " + difference);
-            return difference;
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.d("Testing expiration", "Parse Exception");
-        }
-        return -1;
-    }
 
     public void calculate(View view) {
 
@@ -122,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Testing days", "Positive # of days");
         }
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
     }
 
@@ -134,7 +95,118 @@ public class MainActivity extends AppCompatActivity {
         bindMain.expirationNum.setText("");
     }
 
-    public String calc_call() {
+    public void save(View view) {
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage("Do you want to create a new option or save over an existing one?")
+                .setPositiveButton("New Option", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getTickerName();
+                    }
+                })
+                .setNegativeButton("Existing Option", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        createDialogOptionList();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void getTickerName() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage("Please enter ticker below")
+                .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .setNegativeButton("Save", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Option editedOption = new Option();
+                        editedOption.setTicker_symbol(String.valueOf(ticker_input.getText()));
+                        editedOption.setCurrent(Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim()));
+                        editedOption.setStrike(Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim()));
+                        editedOption.setVolatility(Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()));
+                        editedOption.setRfRate(Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()));
+                        editedOption.setExpiration(String.valueOf(bindMain.expirationNum.getText()).trim());
+                        db.addOption(editedOption);
+                    }
+                });
+        builder.setView(R.layout.ticker_handler);
+        builder.create().show();
+
+    }
+
+    private void createDialogOptionList() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        ArrayList<Option> optionlist = db.getAllOptions();
+        String[] str_option = new String[optionlist.size()];
+
+        SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat simple2 = new SimpleDateFormat("MMM dd yyyy");
+
+        for (int i = 0; i < optionlist.size(); i++) {
+            try {
+                Date get_date = simple.parse(optionlist.get(i).getExpiration());
+                String reformatted_date = simple2.format(get_date);
+                str_option[i] = optionlist.get(i).getTicker_symbol() + " $"
+                        + getStrikeString(optionlist.get(i).getStrike())
+                        + " " + reformatted_date;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        builder.setTitle("Overwrite existing Option");
+        builder.setSingleChoiceItems(str_option, selectedItem[0], new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                selectedItem[0] = i;
+                Log.d("SelectedItemTest", "selecteditem: " + selectedItem[0]);
+            }
+        });
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Option editedOption = new Option();
+                editedOption.setId(selectedItem[0]+1);
+                editedOption.setTicker_symbol(optionlist.get(selectedItem[0]).getTicker_symbol());
+                editedOption.setCurrent(Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim()));
+                editedOption.setStrike(Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim()));
+                editedOption.setVolatility(Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()));
+                editedOption.setRfRate(Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()));
+                editedOption.setExpiration(String.valueOf(bindMain.expirationNum.getText()).trim());
+                db.updateOption(editedOption);
+            }
+        });
+        builder.create().show();
+    }
+
+    public String getStrikeString(double strike) {
+        if ((int) strike == strike) {
+            return String.format("%,.0f",strike);
+        }
+        return String.format("%,.1f",strike);
+
+    }
+
+    public void sendToSavedList(View view) {
+        Intent intent = new Intent(MainActivity.this, SavedListActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private String calc_call() {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
@@ -200,5 +272,44 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void autoPopulate() {
+        db = new DatabaseHandler(this);
+        Option openedOption = db.getOption(getIntent().getIntExtra("id", 0));
+
+        bindMain.spotNum.setText(String.valueOf(openedOption.getCurrent()));
+        bindMain.strikeNum.setText(String.valueOf(openedOption.getStrike()));
+        bindMain.volNum.setText(String.valueOf(openedOption.getVolatility()));
+        bindMain.rfRateNum.setText(String.valueOf(openedOption.getRfRate()));
+        bindMain.expirationNum.setText(openedOption.getExpiration());
+    }
+
+    private int getDays() {
+
+        final Calendar c = Calendar.getInstance();
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        String today = (month + 1) + "/" + day + "/" + year;
+        String future = bindMain.expirationNum.getText().toString().trim();
+
+        try {
+            SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
+            Date today_date = simple.parse(today);
+            Date future_date = simple.parse(future);
+
+            long calc = future_date.getTime() - today_date.getTime();
+            int difference = (int) (calc / (24 * 60 * 60 * 1000));
+            Log.d("Testing expiration", "days: " + difference);
+            return difference;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("Testing expiration", "Parse Exception");
+        }
+        return -1;
     }
 }
