@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -34,14 +35,9 @@ public class SavedListActivity extends AppCompatActivity {
 
         bindSavedList = DataBindingUtil.setContentView(this,R.layout.activity_savedlist);
         db = new DatabaseHandler(this);
-        db.refreshTable();
-        setDBExample();
+//        db.refreshTable();
+//        setDBExample();
         optionlist = db.getAllOptions();
-
-        for (Option option:optionlist) {
-            Log.d("Options Testing", "ticker: " +option.getTicker_symbol() +
-                                               " id: " + option.getId());
-        }
 
         setAdapter();
     }
@@ -71,6 +67,9 @@ public class SavedListActivity extends AppCompatActivity {
                         int position = adapter.getSelectedPos();
                         Option selectedOption = optionlist.get(position);
                         db.deleteOption(selectedOption.getId());
+                        Toast.makeText(SavedListActivity.this,
+                                selectedOption.getTicker_symbol() + " Option deleted",
+                                Toast.LENGTH_SHORT).show();
                         refreshScreen();
                     }
                 })

@@ -12,11 +12,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.kogundeji.database.DatabaseHandler;
 import com.kogundeji.databinding.ActivityMainBinding;
@@ -24,6 +27,8 @@ import com.kogundeji.model.Option;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding bindMain;
     private DatabaseHandler db;
     final int[] selectedItem = {-1};
-    private EditText ticker_input;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +44,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bindMain = DataBindingUtil.setContentView(this, R.layout.activity_main);
         db = new DatabaseHandler(this);
-        ticker_input = findViewById(R.id.ticker);
+        bindMain.expirationNum.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE); //created because Android Studio and XML are acting weird with DateTime inputtype
 
+        setEndIconListener();
+
+        if (getIntent().getIntExtra("id", 0) > 0) {
+            autoPopulate();
+        }
+    }
+
+    private void setEndIconListener() {
         bindMain.expiration.setEndIconOnClickListener(new View.OnClickListener() {
+            boolean success;
+            SimpleDateFormat simple;
+            LocalDate local = null;
+            int year, month, day;
+            Calendar c = Calendar.getInstance();
+
             @Override
             public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
+                try {
+                    simple = new SimpleDateFormat("MM/dd/yyyy");
+                    Date date = simple.parse(bindMain.expirationNum.getText().toString());
+                    local = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    success = true;
+                } catch (ParseException e) {
+                    success = false;
+                }
 
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
+                if (success) {
+                    year = local.getYear();
+                    month = local.getMonthValue() -1;
+                    day = local.getDayOfMonth();
+                } else {
+                    year = c.get(Calendar.YEAR);
+                    month = c.get(Calendar.MONTH);
+                    day = c.get(Calendar.DAY_OF_MONTH);
+                }
+
+
+                Log.d("CalendarTest", "year: " + year + " month: " + month + " day: " + day);
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         MainActivity.this,
@@ -60,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                                                   int exp_month, int exp_day) {
 
                                 String date = (exp_month + 1) + "/" + exp_day + "/" + exp_year;
-
                                 bindMain.expirationNum.setText(date);
                             }
                         },
@@ -68,23 +100,20 @@ public class MainActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-
-        if (getIntent().getIntExtra("id", 0) > 0) {
-            autoPopulate();
-        }
     }
-
 
     public void calculate(View view) {
 
         if (getDays() >= 0) {
             bindMain.callPrice.setText(calc_call());
             bindMain.putPrice.setText(calc_put());
-            Log.d("Testing days", "Positive # of days");
+        } else {
+            Toast.makeText(MainActivity.this,
+                    "Error with Expiration Date. May be empty or in the past.",
+                    Toast.LENGTH_SHORT).show();
         }
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
     }
 
     public void clear(View view) {
@@ -96,19 +125,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void save(View view) {
-
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage("Do you want to create a new option or save over an existing one?")
-                .setPositiveButton("New Option", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        getTickerName();
-                    }
-                })
-                .setNegativeButton("Existing Option", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Existing", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         createDialogOptionList();
+                    }
+                })
+                .setNegativeButton("New", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getTickerName();
                     }
                 });
         builder.create().show();
@@ -116,6 +144,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTickerName() {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.ticker_handler, null);
+        EditText ticker = (EditText) view.findViewById(R.id.ticker);
+
+        builder.setView(view);
         builder.setMessage("Please enter ticker below")
                 .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -126,17 +160,21 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d("PointTest", "Executed1!");
                         Option editedOption = new Option();
-                        editedOption.setTicker_symbol(String.valueOf(ticker_input.getText()));
+
+                        editedOption.setTicker_symbol(String.valueOf(ticker.getText()));
                         editedOption.setCurrent(Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim()));
                         editedOption.setStrike(Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim()));
                         editedOption.setVolatility(Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()));
                         editedOption.setRfRate(Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()));
                         editedOption.setExpiration(String.valueOf(bindMain.expirationNum.getText()).trim());
                         db.addOption(editedOption);
+                        Toast.makeText(MainActivity.this,
+                                editedOption.getTicker_symbol() + " Option saved",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
-        builder.setView(R.layout.ticker_handler);
         builder.create().show();
 
     }
@@ -144,66 +182,76 @@ public class MainActivity extends AppCompatActivity {
     private void createDialogOptionList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         ArrayList<Option> optionlist = db.getAllOptions();
-        String[] str_option = new String[optionlist.size()];
+        if (optionlist.size() > 0) {
 
-        SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
-        SimpleDateFormat simple2 = new SimpleDateFormat("MMM dd yyyy");
 
-        for (int i = 0; i < optionlist.size(); i++) {
-            try {
-                Date get_date = simple.parse(optionlist.get(i).getExpiration());
-                String reformatted_date = simple2.format(get_date);
-                str_option[i] = optionlist.get(i).getTicker_symbol() + " $"
-                        + getStrikeString(optionlist.get(i).getStrike())
-                        + " " + reformatted_date;
-            } catch (ParseException e) {
-                e.printStackTrace();
+            String[] str_option = new String[optionlist.size()];
+
+            SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
+            SimpleDateFormat simple2 = new SimpleDateFormat("MMM dd yyyy");
+
+            for (int i = 0; i < optionlist.size(); i++) {
+                try {
+                    Date get_date = simple.parse(optionlist.get(i).getExpiration());
+                    String reformatted_date = simple2.format(get_date);
+                    str_option[i] = optionlist.get(i).getTicker_symbol() + " $"
+                            + getStrikeString(optionlist.get(i).getStrike())
+                            + " " + reformatted_date;
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
+
+            builder.setTitle("Overwrite existing Option");
+            builder.setSingleChoiceItems(str_option, selectedItem[0], new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    selectedItem[0] = i;
+                    Log.d("SelectedItemTest", "selecteditem: " + selectedItem[0]);
+                }
+            });
+            builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.setNegativeButton("Save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Option editedOption = new Option();
+                    editedOption.setId(selectedItem[0] + 1);
+                    editedOption.setTicker_symbol(optionlist.get(selectedItem[0]).getTicker_symbol());
+                    editedOption.setCurrent(Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim()));
+                    editedOption.setStrike(Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim()));
+                    editedOption.setVolatility(Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()));
+                    editedOption.setRfRate(Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()));
+                    editedOption.setExpiration(String.valueOf(bindMain.expirationNum.getText()).trim());
+                    db.updateOption(editedOption);
+                    Toast.makeText(MainActivity.this,
+                            editedOption.getTicker_symbol() + " Option updated",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.create().show();
+        } else {
+            Toast.makeText(MainActivity.this,
+                    "There are no existing options",
+                    Toast.LENGTH_LONG).show();
         }
-
-        builder.setTitle("Overwrite existing Option");
-        builder.setSingleChoiceItems(str_option, selectedItem[0], new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                selectedItem[0] = i;
-                Log.d("SelectedItemTest", "selecteditem: " + selectedItem[0]);
-            }
-        });
-        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        builder.setNegativeButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Option editedOption = new Option();
-                editedOption.setId(selectedItem[0]+1);
-                editedOption.setTicker_symbol(optionlist.get(selectedItem[0]).getTicker_symbol());
-                editedOption.setCurrent(Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim()));
-                editedOption.setStrike(Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim()));
-                editedOption.setVolatility(Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim()));
-                editedOption.setRfRate(Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim()));
-                editedOption.setExpiration(String.valueOf(bindMain.expirationNum.getText()).trim());
-                db.updateOption(editedOption);
-            }
-        });
-        builder.create().show();
     }
 
     public String getStrikeString(double strike) {
         if ((int) strike == strike) {
-            return String.format("%,.0f",strike);
+            return String.format("%,.0f", strike);
         }
-        return String.format("%,.1f",strike);
+        return String.format("%,.1f", strike);
 
     }
 
     public void sendToSavedList(View view) {
         Intent intent = new Intent(MainActivity.this, SavedListActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private String calc_call() {
@@ -233,6 +281,9 @@ public class MainActivity extends AppCompatActivity {
 
             return String.format("$%.2f", theAnswer);
         } catch (NumberFormatException e) {
+            Toast.makeText(MainActivity.this,
+                    "Error. Please check inputs again.",
+                    Toast.LENGTH_SHORT).show();
             Log.d("Number Format: Call", "Number Format Exception!");
             e.printStackTrace();
         }

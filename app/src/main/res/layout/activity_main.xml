@@ -107,7 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:textColor="@color/text_color"
                         android:textSize="@dimen/input_text_size"
                         />
@@ -161,10 +161,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:inputType="number"
                         android:textColor="@color/text_color"
-                        android:textSize="@dimen/input_text_size"
-                        />
+                        android:textSize="@dimen/input_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </TableRow>
