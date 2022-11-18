@@ -14,9 +14,6 @@
         android:theme="@style/Theme.OptionCalculator"
         tools:targetApi="31">
         <activity
-            android:name=".AddEdit_Screen"
-            android:exported="false" />
-        <activity
             android:name=".SavedListActivity"
             android:exported="false" />
         <activity

@@ -2,6 +2,9 @@
 
     <string name="app_name">Options Calculator</string>
     <string name="header">Options Pricing Calculator</string>
+    <string name="saved_activity_header">Saved Options</string>
+
+<!--    Text String-->
     <string name="spotPrice">Current Price</string>
     <string name="strikePrice">Strike Price</string>
     <string name="volatility">Volatility (%)</string>
@@ -9,20 +12,36 @@
     <string name="expiration">Expiration Date</string>
     <string name="callLabel">Call Price</string>
     <string name="putLabel">Put Price</string>
+    <string name="prefix_dollar">$</string>
+    <string name="suffix_percent">%</string>
+    <string name="expiration_hint">Date format: mm/dd/yyyy</string>
+
+    <string name="font_size">20sp</string>
+
+<!--    Button Text-->
     <string name="calculate">Calculate</string>
     <string name="clear">Clear</string>
     <string name="save">Save</string>
     <string name="saved_list">View Saved List</string>
-    <string name="prefix_dollar">$</string>
-    <string name="suffix_percent">%</string>
-    <string name="expiration_hint">Date format: mm/dd/yyyy</string>
-    <string name="saved_options">Saved Options</string>
-    <string name="add_options">Add Options</string>
-    <string name="edit_options">Edit Options</string>
-    <string name="font_size">20sp</string>
     <string name="delete_option_string">Delete</string>
-    <string name="add_option_string">Add</string>
-    <string name="edit_option_string">Edit</string>
     <string name="open_option_string">Open</string>
-    <string name="drop_db_string">DROP TABLE IF EXISTS</string>
+
+<!--    Dialog Messages-->
+    <string name="new_or_existing_save">Do you want to create a new option or save over an existing one?</string>
+    <string name="new_option">New</string>
+    <string name="existing_option">Existing</string>
+    <string name="enter_ticker">Please enter ticker below</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="delete_confirmation">Are you sure you want to delete this?</string>
+
+<!--    Date Formats-->
+    <string name="preformatted_date">MM/dd/yyyy</string>
+    <string name="formatted_date">MMM dd yyyy</string>
+
+<!--    Error Messages-->
+    <string name="expiration_error">Error with Expiration Date. May be empty or in the past.</string>
+    <string name="no_existing_options">There are no existing options</string>
+    <string name="input_error">Error. Please check inputs again.</string>
+
 </resources>

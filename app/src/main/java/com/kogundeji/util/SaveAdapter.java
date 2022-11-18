@@ -1,7 +1,6 @@
 package com.kogundeji.util;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +51,6 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
             Date get_date = simple.parse(optionList.get(position).getExpiration());
             String reformatted_date = simple2.format(get_date);
             String option_view = ticker + " $" + getStrikeString(strike) + " " + reformatted_date;
-            Log.d("Date Testing", "date: " + get_date + " date2: " + reformatted_date);
             holder.textView.setText(option_view);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -82,17 +80,17 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
     }
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textView;
-        private final CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.list_options);
-            cardView = itemView.findViewById(R.id.card_view_item);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
+            //to make sure only 1 list item is selected at a time
+            //and allows you to make the same selection multiple times
             notifyItemChanged(selectedPos);
             selectedPos = getLayoutPosition();
             if (previouslySelected == selectedPos) {

@@ -15,7 +15,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/adamina"
             android:gravity="center"
-            android:text="@string/saved_options"
+            android:text="@string/saved_activity_header"
             android:textColor="@color/text_color"
             android:textSize="24sp"
             android:textStyle="bold|italic"

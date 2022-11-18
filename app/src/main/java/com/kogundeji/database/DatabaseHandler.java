@@ -29,7 +29,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Delete existing table
-        String DROP_TABLE = String.valueOf(R.string.drop_db_string);
+        String DROP_TABLE = "DROP TABLE IF EXISTS " + Util.TABLE_NAME;
         db.execSQL(DROP_TABLE, new String[]{Util.DATABASE_NAME});
 
         //create new table with same information
@@ -37,6 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void refreshTable() {
+        //used to "start over". Delete table and creates it again
         SQLiteDatabase db = this.getWritableDatabase();
         String DROP_TABLE = "DROP TABLE IF EXISTS " + Util.TABLE_NAME;
         db.execSQL(DROP_TABLE);
@@ -45,7 +46,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void createTable(SQLiteDatabase db) {
-        String CREATE_CONTACT_TABLE = "CREATE TABLE " + Util.TABLE_NAME + "("
+        String CREATE_CONTACT_TABLE = "CREATE TABLE " + Util.TABLE_NAME
+                + "("
                 + Util.KEY_ID + " INTEGER PRIMARY KEY," //autoincrements automatically because it is the primary key
                 + Util.KEY_TICKER + " TEXT,"
                 + Util.KEY_STRIKE + " REAL,"
@@ -62,7 +64,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void addOption(Option option) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        //create database row from option information
+        //create database row from Option instance
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TICKER, option.getTicker_symbol());
         values.put(Util.KEY_STRIKE, option.getStrike());
@@ -107,8 +109,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         //select all contacts
-        String selectAll = "SELECT * FROM " + Util.TABLE_NAME;
-        Cursor cursor = db.rawQuery(selectAll,null);
+        String SELECT_TABLE = "SELECT * FROM " + Util.TABLE_NAME;
+        Log.d("ListTest2", "String: " + SELECT_TABLE);
+        Cursor cursor = db.rawQuery(SELECT_TABLE,null);
 
         //Loop through data
         if (cursor.moveToFirst()) {
@@ -122,10 +125,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 option.setExpiration(cursor.getString(5));
                 option.setRfRate(Double.parseDouble(cursor.getString(6)));
 
-                Log.d("ID Testing", "id: " + cursor.getString(0));
-
                 optionList.add(option);
-
             } while (cursor.moveToNext());
         }
         return optionList;
@@ -156,9 +156,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public int getCount() {
-        String countQuery = "SELECT * FROM " + Util.TABLE_NAME;
+        String SELECT_TABLE = "SELECT * FROM " + Util.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery,null);
+        Cursor cursor = db.rawQuery(SELECT_TABLE,null);
 
         return cursor.getCount();
     }

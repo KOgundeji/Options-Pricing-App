@@ -1,11 +1,9 @@
 package com.kogundeji;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -35,9 +33,9 @@ public class SavedListActivity extends AppCompatActivity {
 
         bindSavedList = DataBindingUtil.setContentView(this,R.layout.activity_savedlist);
         db = new DatabaseHandler(this);
-//        db.refreshTable();
-//        setDBExample();
-        optionlist = db.getAllOptions();
+//        db.refreshTable(); //deletes tables and recreates it as a "reset"
+//        setDBExample(); //populates with example data
+        optionlist = db.getAllOptions(); //populates recycler view with Option instances from database
 
         setAdapter();
     }
@@ -50,18 +48,11 @@ public class SavedListActivity extends AppCompatActivity {
         bindSavedList.optionsList.setItemAnimator(new DefaultItemAnimator());
     }
 
-//    public void addOptions(View view) {
-//        //goes to new screen
-//        Intent intent = new Intent(this,AddEdit_Screen.class);
-//        intent.putExtra("page_type","Add");
-//        intent.putExtra("button_name","Add");
-//        startActivity(intent);
-//    }
     public void deleteOptions(View view) {
-        //removes, but asks for confirmation first
+        //deletes Option from database, but asks for confirmation first
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(getString(R.string.delete_confirmation))
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         int position = adapter.getSelectedPos();
@@ -73,33 +64,12 @@ public class SavedListActivity extends AppCompatActivity {
                         refreshScreen();
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
                 });
         builder.create().show();
-    }
-
-    public Dialog onCreateDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this?")
-                .setPositiveButton("I'm sure", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int position = adapter.getSelectedPos();
-                        Option selectedOption = optionlist.get(position);
-                        db.deleteOption(selectedOption.getId());
-                        refreshScreen();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-        return builder.create();
     }
 
     public void refreshScreen() {
@@ -110,33 +80,8 @@ public class SavedListActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-//    public void editOptions(View view) {
-//        //goes to same new screen as addOptions, but inputs existing values to start off
-//
-//        int position = adapter.getSelectedPos();
-//        Log.d("Adapter Pos", String.valueOf(position));
-//
-//        if (position >= 0) {
-//            Option selectedOption = optionlist.get(position);
-//
-//            Intent intent = new Intent(this, AddEdit_Screen.class);
-//            intent.putExtra("page_type","Edit");
-//            intent.putExtra("button_name", "Update");
-//            intent.putExtra("symbol",selectedOption.getTicker_symbol());
-//            intent.putExtra("current", selectedOption.getCurrent());
-//            intent.putExtra("strike", selectedOption.getStrike());
-//            intent.putExtra("volatility", selectedOption.getVolatility());
-//            intent.putExtra("rf", selectedOption.getRfRate());
-//            intent.putExtra("expiration", selectedOption.getExpiration());
-//            intent.putExtra("id",selectedOption.getId());
-//            startActivity(intent);
-//        } else {
-//            Log.d("Adapter Pos", "Option selection failed!");
-//        }
-//    }
-
     public void openOptions(View view) {
-        //opens in original main screen with existing values pre-loaded
+        //opens in "MainActivity" and loads values into EditText slots
         int position = adapter.getSelectedPos();
         Option selectedOption = optionlist.get(position);
 
@@ -145,9 +90,8 @@ public class SavedListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void setDBExample() {
-
+        //example data
         db.addOption(new Option("ASTS",
                 6.31,25,80,4.5,"1/17/2024"));
         db.addOption(new Option("MELI",
@@ -168,7 +112,5 @@ public class SavedListActivity extends AppCompatActivity {
                 3.12,5,60,4.5,"1/19/2025"));
         db.addOption(new Option("JMIA",
                 3,2.5,67,4.5,"1/19/2025"));
-
     }
-
 }
