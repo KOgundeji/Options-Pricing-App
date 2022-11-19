@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_color">#6B00133A</color>
-    <color name="button_color">#00B8D4</color>
-    <color name="text_color">#E6E6E6</color>
-    <color name="hint_color">#EA9C01</color>
-    <color name="button_text_color">#FF000000</color>
-    <color name="call_color">#CDCDCD</color>
-    <color name="put_color">#EA9C01</color>
-    <color name="box_stroke">#EA9C01</color>
-    <color name="input_background_color">#6B9ABCFF</color>
-    <color name="options_list_color">#FF000000</color>
-    <color name="cardView_background_light">#6BDEE9FF</color>
-    <color name="cardView_background_dark">#6B9ABCFF</color>
+    <color name="darkest_blue">#0D2440</color>
+    <color name="dark_blue">#224773</color>
+    <color name="base_blue">#4779B2</color>
+    <color name="lightest_blue">#E5F1FF</color>
+    <color name="gold_complement">#CC9C16</color>
+    <color name="dark_gold_complement">#A67A00</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="background">@color/darkest_blue</color>
+    <color name="button_background">@color/base_blue</color>
+    <color name="main_text">@color/lightest_blue</color>
+    <color name="hint_stroke">@color/gold_complement</color>
+    <color name="button_text_color">@color/lightest_blue</color>
+    <color name="put_call_label">@color/lightest_blue</color>
+    <color name="put_call_text">@color/gold_complement</color>
+    <color name="input_background">@color/dark_blue</color>
+    <color name="cardView_background">@color/dark_blue</color>
 
 </resources>

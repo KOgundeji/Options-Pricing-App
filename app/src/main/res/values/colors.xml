@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="darkest_blue">#0D2440</color>
+    <color name="dark_blue">#224773</color>
+    <color name="base_blue">#4779B2</color>
+    <color name="lightest_blue">#E5F1FF</color>
+    <color name="gold_complement">#CC9600</color>
+    <color name="dark_gold_complement">#A67A00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#2DB252</color>
 
-    <color name="background_color">#F7E1E1E1</color>
-    <color name="button_color">#00BCD4</color>
-    <color name="text_color">#FF000000</color>
-    <color name="hint_color">#00BCD4</color>
-    <color name="button_text_color">#212121</color>
-    <color name="call_color">#0000FF</color>
-    <color name="put_color">#D50000</color>
-    <color name="box_stroke">#EA9C01</color>
-    <color name="input_background_color">#FFFFFF</color>
-    <color name="options_list_color">#FF000000</color>
-    <color name="cardView_background_light">#FFFFFF</color>
-    <color name="cardView_background_dark">#F9FFB9</color>
+    <color name="background">@color/lightest_blue</color>
+    <color name="button_background">@color/base_blue</color>
+    <color name="main_text">@color/darkest_blue</color>
+    <color name="hint_stroke">@color/dark_blue</color>
+    <color name="button_text_color">@color/lightest_blue</color>
+    <color name="put_call_label">@color/darkest_blue</color>
+    <color name="put_call_text">@color/green</color>
+    <color name="input_background">@color/white</color>
+    <color name="cardView_background">@color/white</color>
 
 </resources>

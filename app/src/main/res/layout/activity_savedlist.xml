@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color">
+        android:background="@color/background">
 
         <TextView
             android:id="@+id/header"
@@ -16,7 +16,7 @@
             android:fontFamily="@font/adamina"
             android:gravity="center"
             android:text="@string/saved_activity_header"
-            android:textColor="@color/text_color"
+            android:textColor="@color/main_text"
             android:textSize="24sp"
             android:textStyle="bold|italic"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/button_color"
+                android:background="@color/button_background"
                 android:minWidth="@dimen/saved_act_min_width"
                 android:onClick="deleteOptions"
                 android:text="@string/delete_option_string"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/button_color"
+                android:background="@color/button_background"
                 android:minWidth="@dimen/saved_act_min_width"
                 android:onClick="openOptions"
                 android:text="@string/open_option_string"

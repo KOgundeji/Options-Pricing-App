@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color"
+        android:background="@color/background"
         tools:context=".MainActivity">
 
         <TextView
@@ -16,7 +16,7 @@
             android:fontFamily="@font/adamina"
             android:gravity="center"
             android:text="@string/header"
-            android:textColor="@color/text_color"
+            android:textColor="@color/main_text"
             android:textSize="24sp"
             android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,9 +46,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/input_margin_start"
                     android:hint="@string/spotPrice"
-                    app:boxBackgroundColor="@color/input_background_color"
-                    app:boxStrokeColor="@color/box_stroke"
-                    app:hintTextColor="@color/hint_color"
+                    app:boxBackgroundColor="@color/input_background"
+                    app:boxStrokeColor="@color/hint_stroke"
+                    app:hintTextColor="@color/hint_stroke"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:prefixText="@string/prefix_dollar">
 
@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/main_text"
                         android:textSize="@dimen/input_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -71,9 +71,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/input_margin_start"
                     android:hint="@string/strikePrice"
-                    app:boxBackgroundColor="@color/input_background_color"
-                    app:boxStrokeColor="@color/box_stroke"
-                    app:hintTextColor="@color/hint_color"
+                    app:boxBackgroundColor="@color/input_background"
+                    app:boxStrokeColor="@color/hint_stroke"
+                    app:hintTextColor="@color/hint_stroke"
                     app:prefixText="@string/prefix_dollar">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/main_text"
                         android:textSize="@dimen/input_text_size"
                         />
 
@@ -97,9 +97,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/input_margin_start"
                     android:hint="@string/volatility"
-                    app:boxBackgroundColor="@color/input_background_color"
-                    app:boxStrokeColor="@color/box_stroke"
-                    app:hintTextColor="@color/hint_color"
+                    app:boxBackgroundColor="@color/input_background"
+                    app:boxStrokeColor="@color/hint_stroke"
+                    app:hintTextColor="@color/hint_stroke"
                     app:suffixText="@string/suffix_percent" >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/main_text"
                         android:textSize="@dimen/input_text_size"
                         />
 
@@ -123,9 +123,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/input_margin_start"
                     android:hint="@string/rfRate"
-                    app:boxBackgroundColor="@color/input_background_color"
-                    app:boxStrokeColor="@color/box_stroke"
-                    app:hintTextColor="@color/hint_color"
+                    app:boxBackgroundColor="@color/input_background"
+                    app:boxStrokeColor="@color/hint_stroke"
+                    app:hintTextColor="@color/hint_stroke"
                     app:suffixText="@string/suffix_percent">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:inputType="numberDecimal"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/main_text"
                         android:textSize="@dimen/input_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -148,12 +148,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/input_margin_start"
                     android:hint="@string/expiration"
-                    app:boxBackgroundColor="@color/input_background_color"
-                    app:boxStrokeColor="@color/box_stroke"
+                    app:boxBackgroundColor="@color/input_background"
                     app:endIconCheckable="true"
                     app:endIconDrawable="@drawable/calendar_foreground"
                     app:endIconMode="custom"
-                    app:hintTextColor="@color/hint_color"
+                    app:hintTextColor="@color/hint_stroke"
+                    app:boxStrokeColor="@color/hint_stroke"
                     app:helperText="@string/expiration_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -161,7 +161,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/main_text"
                         android:textSize="@dimen/input_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -186,7 +186,7 @@
                 android:layout_width="@dimen/button_width"
                 android:layout_height="64dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/button_color"
+                android:background="@color/button_background"
                 android:onClick="calculate"
                 android:text="@string/calculate"
                 android:textColor="@color/button_text_color"
@@ -197,7 +197,7 @@
                 android:layout_width="@dimen/button_width"
                 android:layout_height="64dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/button_color"
+                android:background="@color/button_background"
                 android:onClick="clear"
                 android:text="@string/clear"
                 android:textColor="@color/button_text_color"
@@ -208,7 +208,7 @@
                 android:layout_width="@dimen/button_width"
                 android:layout_height="64dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/button_color"
+                android:background="@color/button_background"
                 android:onClick="save"
                 android:text="@string/save"
                 android:textColor="@color/button_text_color"
@@ -219,7 +219,7 @@
                 android:layout_width="@dimen/button_width"
                 android:layout_height="64dp"
                 android:layout_marginTop="15dp"
-                android:background="@color/button_color"
+                android:background="@color/button_background"
                 android:onClick="sendToSavedList"
                 android:text="@string/saved_list"
                 android:textColor="@color/button_text_color"
@@ -235,7 +235,7 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/callLabel"
-            android:textColor="@color/call_color"
+            android:textColor="@color/put_call_label"
             android:textSize="30sp"
 
             android:textStyle="bold"
@@ -251,7 +251,7 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/putLabel"
-            android:textColor="@color/put_color"
+            android:textColor="@color/put_call_label"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -264,8 +264,8 @@
             android:layout_width="156dp"
             android:layout_height="43dp"
             android:gravity="center"
-            android:textColor="@color/text_color"
-            android:textSize="24sp"
+            android:textColor="@color/put_call_text"
+            android:textSize="@dimen/call_put_text_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/put_price"
             app:layout_constraintHorizontal_bias="0.5"
@@ -277,8 +277,8 @@
             android:layout_width="156dp"
             android:layout_height="43dp"
             android:gravity="center"
-            android:textColor="@color/text_color"
-            android:textSize="24sp"
+            android:textColor="@color/put_call_text"
+            android:textSize="@dimen/call_put_text_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

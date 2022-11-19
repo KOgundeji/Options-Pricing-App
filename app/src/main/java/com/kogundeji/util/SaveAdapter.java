@@ -1,5 +1,6 @@
 package com.kogundeji.util;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kogundeji.SavedListActivity;
 import com.kogundeji.model.Option;
 import com.kogundeji.R;
 
@@ -23,6 +27,7 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
     private ArrayList<Option> optionList;
     private int selectedPos = RecyclerView.NO_POSITION;
     private int previouslySelected = RecyclerView.NO_POSITION - 1;
+    private int selectedBackground = Color.rgb(71,179,98);
 
     public SaveAdapter(ArrayList<Option> optionList) {
         this.optionList = optionList;
@@ -39,7 +44,8 @@ public class SaveAdapter extends RecyclerView.Adapter<SaveAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.itemView.setSelected(selectedPos == position);
-        holder.itemView.setBackgroundColor(selectedPos == position ? Color.GREEN:Color.TRANSPARENT);
+        holder.itemView.setBackgroundColor(selectedPos == position ?
+                selectedBackground : Color.TRANSPARENT);
 
         SimpleDateFormat simple = new SimpleDateFormat("MM/dd/yyyy");
         SimpleDateFormat simple2 = new SimpleDateFormat("MMM dd yyyy");

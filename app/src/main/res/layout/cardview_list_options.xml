@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:outlineProvider="bounds"
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
 
@@ -13,14 +14,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        app:cardBackgroundColor="@color/input_background_color"
+        app:cardBackgroundColor="@color/cardView_background"
         app:cardCornerRadius="5dp"
         app:cardElevation="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:outlineAmbientShadowColor="@color/dark_blue"
+            android:outlineProvider="bounds">
 
             <ImageView
                 android:layout_width="50dp"
@@ -32,9 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:textColor="@color/text_color"
-                android:textStyle="normal"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/option_list_text_size"
+                android:textStyle="normal"
                 tools:text="item" />
 
         </LinearLayout>
