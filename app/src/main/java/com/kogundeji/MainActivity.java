@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    private void getTickerName() {
+    public void getTickerName() {
         //Creates another dialog to ask for ticker name for new option.
         //This is the last piece of data needed to create an "Option" instance for DB entry
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    private void createDialogOptionList() {
+    public void createDialogOptionList() {
         //creates the option list to choose which option to overwrite
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         ArrayList<Option> optionlist = db.getAllOptions();
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private String calc_call() {
+    public String calc_call() {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private String calc_put() {
+    public String calc_put() {
         //use black-scholes model to calculate put option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
         try {
@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void populateOptionInfo() {
+    public void populateOptionInfo() {
         //sets info of Option opened from "SavedListActivity"
         db = new DatabaseHandler(this);
         Option openedOption = db.getOption(getIntent().getIntExtra("id", 0));
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
         bindMain.expirationNum.setText(openedOption.getExpiration());
     }
 
-    private int getDays() {
+    public int getDays() {
         //calculates how many days between today and selected date
         final Calendar c = Calendar.getInstance();
 
