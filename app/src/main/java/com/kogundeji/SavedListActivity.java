@@ -34,8 +34,6 @@ public class SavedListActivity extends AppCompatActivity {
 
         bindSavedList = DataBindingUtil.setContentView(this,R.layout.activity_savedlist);
         db = new DatabaseHandler(this);
-//        db.refreshTable(); //deletes tables and recreates it as a "reset"
-//        setDBExample(); //populates with example data
         optionlist = db.getAllOptions(); //populates recycler view with Option instances from database
 
         setAdapter();
@@ -86,32 +84,8 @@ public class SavedListActivity extends AppCompatActivity {
         int position = adapter.getSelectedPos();
         Option selectedOption = optionlist.get(position);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ExistingOptionActivity.class);
         intent.putExtra("id",selectedOption.getId());
         startActivity(intent);
-    }
-
-    private void setDBExample() {
-        //example data
-        db.addOption(new Option("ASTS",
-                6.31,25,80,4.5,"1/17/2024"));
-        db.addOption(new Option("MELI",
-                998,1200,60,4.5,"1/17/2024"));
-        db.addOption(new Option("SE",
-                49,62.5,60,4.5,"1/19/2025"));
-        db.addOption(new Option("NU",
-                4.29,7,67,4.5,"1/19/2025"));
-        db.addOption(new Option("STNE",
-                11.05,20,60,4.5,"1/17/2024"));
-        db.addOption(new Option("ARQQ",
-                8.52,12.5,110,4.5,"11/19/2023"));
-        db.addOption(new Option("NRGV",
-                3.18,7,85,4.5,"1/19/2025"));
-        db.addOption(new Option("ORGN",
-                5.82,7.5,60,4.5,"1/17/2024"));
-        db.addOption(new Option("QUBT",
-                3.12,5,60,4.5,"1/19/2025"));
-        db.addOption(new Option("JMIA",
-                3,2.5,67,4.5,"1/19/2025"));
     }
 }

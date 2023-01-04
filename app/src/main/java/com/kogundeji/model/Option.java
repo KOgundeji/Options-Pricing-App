@@ -1,24 +1,33 @@
 package com.kogundeji.model;
 
 public class Option {
-    public static final int CALL = 0;
-    public static final int PUT = 1;
 
     int id;
-    String ticker_symbol, expiration;
-    double current, strike, volatility, rfRate;
+    String expiration, ticker_symbol;
+    double strike, rfRate, volatility, currentPrice;
 
     public Option() {
     }
 
-    public Option(String ticker_symbol,
-                  double current, double strike, double volatility, double rfRate, String expiration) {
-        this.ticker_symbol = ticker_symbol;
-        this.current = current;
+    public Option(String expiration, double strike, double volatility, double currentPrice, double rfRate) {
+        this.expiration = expiration;
         this.strike = strike;
         this.volatility = volatility;
+        this.currentPrice = currentPrice;
         this.rfRate = rfRate;
-        this.expiration = expiration;
+    }
+
+    @Override
+    public String toString() {
+        return "Option{" +
+                "id=" + id +
+                ", expiration='" + expiration + '\'' +
+                ", strike=" + strike +
+                ", rfRate=" + rfRate +
+                ", ticker_symbol='" + ticker_symbol + '\'' +
+                ", volatility=" + volatility +
+                ", current=" + currentPrice +
+                '}';
     }
 
     public int getId() {
@@ -37,12 +46,12 @@ public class Option {
         this.ticker_symbol = ticker_symbol;
     }
 
-    public double getCurrent() {
-        return current;
+    public double getCurrentPrice() {
+        return currentPrice;
     }
 
-    public void setCurrent(double current) {
-        this.current = current;
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public double getStrike() {

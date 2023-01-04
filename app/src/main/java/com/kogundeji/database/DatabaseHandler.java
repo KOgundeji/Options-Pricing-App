@@ -10,7 +10,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.kogundeji.R;
 import com.kogundeji.model.Option;
 import com.kogundeji.util.Util;
 
@@ -68,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TICKER, option.getTicker_symbol());
         values.put(Util.KEY_STRIKE, option.getStrike());
-        values.put(Util.KEY_CURRENT, option.getCurrent());
+        values.put(Util.KEY_CURRENT, option.getCurrentPrice());
         values.put(Util.KEY_VOL, option.getVolatility());
         values.put(Util.KEY_EXPIRATION, option.getExpiration());
         values.put(Util.KEY_RFRATE, option.getRfRate());
@@ -93,7 +92,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             option.setId(Integer.parseInt(cursor.getString(0)));
             option.setTicker_symbol(cursor.getString(1));
             option.setStrike(Double.parseDouble(cursor.getString(2)));
-            option.setCurrent(Double.parseDouble(cursor.getString(3)));
+            option.setCurrentPrice(Double.parseDouble(cursor.getString(3)));
             option.setVolatility(Double.parseDouble(cursor.getString(4)));
             option.setExpiration(cursor.getString(5));
             option.setRfRate(Double.parseDouble(cursor.getString(6)));
@@ -120,7 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 option.setId(Integer.parseInt(cursor.getString(0)));
                 option.setTicker_symbol(cursor.getString(1));
                 option.setStrike(Double.parseDouble(cursor.getString(2)));
-                option.setCurrent(Double.parseDouble(cursor.getString(3)));
+                option.setCurrentPrice(Double.parseDouble(cursor.getString(3)));
                 option.setVolatility(Double.parseDouble(cursor.getString(4)));
                 option.setExpiration(cursor.getString(5));
                 option.setRfRate(Double.parseDouble(cursor.getString(6)));
@@ -137,7 +136,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TICKER, option.getTicker_symbol());
         values.put(Util.KEY_STRIKE, option.getStrike());
-        values.put(Util.KEY_CURRENT, option.getCurrent());
+        values.put(Util.KEY_CURRENT, option.getCurrentPrice());
         values.put(Util.KEY_VOL, option.getVolatility());
         values.put(Util.KEY_EXPIRATION, option.getExpiration());
         values.put(Util.KEY_RFRATE, option.getRfRate());

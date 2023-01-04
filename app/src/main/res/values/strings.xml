@@ -43,5 +43,9 @@
     <string name="expiration_error">Error with Expiration Date. May be empty or in the past.</string>
     <string name="no_existing_options">There are no existing options</string>
     <string name="input_error">Error. Please check inputs again.</string>
+    <string name="stock_name">Stock Name</string>
+    <string name="search_existing_options">Search Existing Options</string>
+    <string name="back_to_calculator">Back to Calculator</string>
+    <string name="option_placeholders">---</string>
 
 </resources>

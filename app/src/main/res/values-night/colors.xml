@@ -17,5 +17,6 @@
     <color name="put_call_text">@color/gold_complement</color>
     <color name="input_background">@color/dark_blue</color>
     <color name="cardView_background">@color/dark_blue</color>
+    <color name="disabled_input_background">#123259</color>
 
 </resources>
