@@ -5,6 +5,8 @@ import android.icu.util.Calendar;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.kogundeji.model.Option;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -19,6 +21,7 @@ public class OptionUtil {
     //class of static methods to help with Option formatting and calculations
     //risk-free rate assumed to be 5% for existing options (for simplicity)
     public final static double riskFreeRate = 5;
+    public final static String apikey = "XXXXXX"; //removed because code is available for public viewing
 
     public static String getString(String stockTicker, double strikePrice, String expiration) {
         String fullTicker = "";
@@ -57,7 +60,7 @@ public class OptionUtil {
         return -1;
     }
 
-    public static String calculateCallPrice(Context context, Option option) {
+    public static String calculateCallPrice (Option option, @Nullable Context context) {
         //use black-scholes model to calculate call option price
         //the delta_first_part part of the equation (e^-qt) is irrelevant because we assume dividends = 0. Equation always 1
 
@@ -86,9 +89,11 @@ public class OptionUtil {
 
             return String.format("$%.2f", theAnswer);
         } catch (NumberFormatException e) {
-            Toast.makeText(context, "Error. Please check inputs again.",
-                    Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            if (context != null) {
+                Toast.makeText(context, "Error. Please check inputs again.",
+                        Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -128,9 +133,9 @@ public class OptionUtil {
     public static String getFormattedStrikeString(double strike) {
         //helper method to set the strike price formatting
         if ((int) strike == strike) {
-            return String.format("%,.0f", strike);
+            return String.format("%.0f", strike);
         }
-        return String.format("%,.1f", strike);
+        return String.format("%.1f", strike);
     }
 
     public static boolean isNetworkAvailable() {

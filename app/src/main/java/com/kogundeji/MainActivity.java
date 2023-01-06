@@ -93,30 +93,40 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCalculateButtonClick(View view) {
         //if day selected is in the future, run Black-Scholes option calculations
+        boolean anyInputEmpty = String.valueOf(bindMain.expirationNum.getText()).isEmpty() ||
+                String.valueOf(bindMain.spotNum.getText()).isEmpty() ||
+                String.valueOf(bindMain.strikeNum.getText()).isEmpty() ||
+                String.valueOf(bindMain.rfRateNum.getText()).isEmpty() ||
+                String.valueOf(bindMain.volNum.getText()).isEmpty();
 
-        String expiration = String.valueOf(bindMain.expirationNum.getText()).trim();
-        double currentPrice = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim());
-        double strikePrice = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim());
-        double riskFree = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim());
-        double volatility = Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim());
+        if (!anyInputEmpty) {
+            String expiration = String.valueOf(bindMain.expirationNum.getText()).trim();
+            double currentPrice = Double.parseDouble(String.valueOf(bindMain.spotNum.getText()).trim());
+            double strikePrice = Double.parseDouble(String.valueOf(bindMain.strikeNum.getText()).trim());
+            double riskFree = Double.parseDouble(String.valueOf(bindMain.rfRateNum.getText()).trim());
+            double volatility = Double.parseDouble(String.valueOf(bindMain.volNum.getText()).trim());
 
-        double daysRemaining = OptionUtil.getDaysRemaining(expiration);
+            double daysRemaining = OptionUtil.getDaysRemaining(expiration);
 
-        Option queriedOption = new Option(expiration, strikePrice, volatility, currentPrice, riskFree);
+            Option queriedOption = new Option(expiration, strikePrice, volatility, currentPrice, riskFree);
 
-        if (daysRemaining >= 0) {
+            if (daysRemaining >= 0) {
 
-            String callPrice = OptionUtil.calculateCallPrice(this, queriedOption);
-            String putPrice = OptionUtil.calculatePutPrice(queriedOption);
+                String callPrice = OptionUtil.calculateCallPrice(queriedOption,this);
+                String putPrice = OptionUtil.calculatePutPrice(queriedOption);
 
-            bindMain.callPrice.setText(callPrice);
-            bindMain.putPrice.setText(putPrice);
+                bindMain.callPrice.setText(callPrice);
+                bindMain.putPrice.setText(putPrice);
+            } else {
+                Toast.makeText(MainActivity.this, getString(R.string.expiration_error),
+                        Toast.LENGTH_SHORT).show();
+            }
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //hide keyboard
         } else {
-            Toast.makeText(MainActivity.this, getString(R.string.expiration_error),
+            Toast.makeText(this, "Please enter a value for every input",
                     Toast.LENGTH_SHORT).show();
         }
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //hide keyboard
     }
 
     public void onClearButtonClick(View view) {

@@ -136,7 +136,7 @@ public class ExistingOptionActivity extends AppCompatActivity {
                         editedOption.setExpiration(String.valueOf(bind.existingExpirationNum.getText()).trim());
                         db.addOption(editedOption);
 
-                        Toast.makeText(activityContext,editedOption.getTicker_symbol() + " Option saved",
+                        Toast.makeText(activityContext, editedOption.getTicker_symbol() + " Option saved",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -186,10 +186,7 @@ public class ExistingOptionActivity extends AppCompatActivity {
                     Option editedOption = new Option();
                     editedOption.setId(selectedItem[0] + 1);
                     editedOption.setTicker_symbol(optionlist.get(selectedItem[0]).getTicker_symbol());
-                    editedOption.setCurrentPrice(Double.parseDouble(String.valueOf(bind.existingSpotNum.getText()).trim()));
                     editedOption.setStrike(Double.parseDouble(String.valueOf(bind.existingStrikeNum.getText()).trim()));
-                    editedOption.setVolatility(Double.parseDouble(String.valueOf(bind.existingVolNum.getText()).trim()));
-                    editedOption.setRfRate(Double.parseDouble(String.valueOf(bind.existingRfRateNum.getText()).trim()));
                     editedOption.setExpiration(String.valueOf(bind.existingExpirationNum.getText()).trim());
                     db.updateOption(editedOption);
                     Toast.makeText(ExistingOptionActivity.this,
@@ -210,14 +207,8 @@ public class ExistingOptionActivity extends AppCompatActivity {
         Option openedOption = db.getOption(getIntent().getIntExtra("id", 0));
 
         bind.existingNameString.setText(openedOption.getTicker_symbol());
-        bind.existingSpotNum.setText(String.valueOf(openedOption.getCurrentPrice()));
         bind.existingStrikeNum.setText(String.valueOf(openedOption.getStrike()));
-        bind.existingVolNum.setText(String.valueOf(openedOption.getVolatility()));
-        bind.existingRfRateNum.setText(String.valueOf(openedOption.getRfRate()));
         bind.existingExpirationNum.setText(openedOption.getExpiration());
-        bind.existingSpotPrice.setVisibility(View.VISIBLE);
-        bind.existingVolatility.setVisibility(View.VISIBLE);
-        bind.existingRfRate.setVisibility(View.VISIBLE);
     }
 
     public void onClearButtonClick_Existing(View view) {
@@ -236,81 +227,91 @@ public class ExistingOptionActivity extends AppCompatActivity {
 
     public void onCalculateButtonClick_Existing(View view) {
         //method takes option data from TD Ameritrade website and inputs it in to app
-        Option queriedOption = new Option();
-        final String[] descriptionCheck = {""};
 
-        String ticker = String.valueOf(bind.existingNameString.getText()).trim();
-        String expiration = String.valueOf(bind.existingExpirationNum.getText()).trim();
-        double strikePrice = Double.parseDouble(String.valueOf(bind.existingStrikeNum.getText()).trim());
+        boolean anyInputEmpty = String.valueOf(bind.existingNameString.getText()).isEmpty() ||
+                String.valueOf(bind.existingExpirationNum.getText()).isEmpty() ||
+                String.valueOf(bind.existingStrikeNum.getText()).isEmpty();
 
-        queriedOption.setTicker_symbol(ticker);
-        queriedOption.setExpiration(expiration);
-        queriedOption.setStrike(strikePrice);
-        queriedOption.setRfRate(OptionUtil.riskFreeRate);
+        if (!anyInputEmpty) {
+            Option queriedOption = new Option();
+            final String[] descriptionCheck = {""};
 
-        double daysRemaining = OptionUtil.getDaysRemaining(String.valueOf(bind.existingExpirationNum.getText()).trim());
+            String ticker = String.valueOf(bind.existingNameString.getText()).trim();
+            String expiration = String.valueOf(bind.existingExpirationNum.getText()).trim();
+            double strikePrice = Double.parseDouble(String.valueOf(bind.existingStrikeNum.getText()).trim());
 
-        //if day selected is in the future, run Black-Scholes option calculations
-        if (daysRemaining >= 0) {
+            queriedOption.setTicker_symbol(ticker);
+            queriedOption.setExpiration(expiration);
+            queriedOption.setStrike(strikePrice);
+            queriedOption.setRfRate(OptionUtil.riskFreeRate);
 
-            Map<String, String> parameters = new HashMap<>();
-            String optionTicker = OptionUtil.getString(ticker, strikePrice, expiration);
-            parameters.put("symbol", optionTicker);
-            parameters.put("apikey", "XXXX"); //removed because code is available for public viewing
+            double daysRemaining = OptionUtil.getDaysRemaining(String.valueOf(bind.existingExpirationNum.getText()).trim());
 
-            GetOptionDataService service = RetrofitInstance.getRetrofitInstance().create(GetOptionDataService.class);
+            //if day selected is in the future, run Black-Scholes option calculations
+            if (daysRemaining >= 0) {
 
-            Call<JsonElement> call = service.getOptionData(parameters);
+                Map<String, String> parameters = new HashMap<>();
+                String optionTicker = OptionUtil.getString(ticker, strikePrice, expiration);
+                parameters.put("symbol", optionTicker);
+                parameters.put("apikey", OptionUtil.apikey);
 
-            call.enqueue(new Callback<JsonElement>() {
-                @Override
-                public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                GetOptionDataService service = RetrofitInstance.getRetrofitInstance().create(GetOptionDataService.class);
 
-                    assert response.body() != null;
+                Call<JsonElement> call = service.getOptionData(parameters);
 
-                    JsonObject jObj = response.body().getAsJsonObject().get(optionTicker).getAsJsonObject();
-                    double parsedCurrentPrice = Double.parseDouble(jObj.get("underlyingPrice").toString().trim());
-                    double parsedVolatility = Double.parseDouble(jObj.get("volatility").toString());
-                    double parsedStrike = Double.parseDouble(jObj.get("strikePrice").toString().trim());
-                    String parsedTicker = jObj.get("underlying").toString().replaceAll("\"", "");
-                    descriptionCheck[0] = jObj.get("description").toString().replaceAll("\"", "");
+                call.enqueue(new Callback<JsonElement>() {
+                    @Override
+                    public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                    if (!descriptionCheck[0].equals("Symbol not found")) {
-                        assert (parsedTicker.equals(ticker));
-                        assert (parsedStrike == strikePrice);
+                        assert response.body() != null;
 
-                        queriedOption.setCurrentPrice(parsedCurrentPrice);
-                        queriedOption.setVolatility(parsedVolatility);
+                        JsonObject jObj = response.body().getAsJsonObject().get(optionTicker).getAsJsonObject();
+                        double parsedCurrentPrice = Double.parseDouble(jObj.get("underlyingPrice").toString().trim());
+                        double parsedVolatility = Double.parseDouble(jObj.get("volatility").toString());
+                        double parsedStrike = Double.parseDouble(jObj.get("strikePrice").toString().trim());
+                        String parsedTicker = jObj.get("underlying").toString().replaceAll("\"", "");
+                        descriptionCheck[0] = jObj.get("description").toString().replaceAll("\"", "");
 
-                        String callPrice = OptionUtil.calculateCallPrice(activityContext,queriedOption);
-                        String putPrice = OptionUtil.calculatePutPrice(queriedOption);
+                        if (!descriptionCheck[0].equals("Symbol not found")) {
+                            assert (parsedTicker.equals(ticker));
+                            assert (parsedStrike == strikePrice);
 
-                        bind.existingCallPrice.setText(callPrice);
-                        bind.existingPutPrice.setText(putPrice);
-                        bind.existingSpotNum.setText(String.valueOf(queriedOption.getCurrentPrice()));
-                        bind.existingVolNum.setText(String.valueOf(queriedOption.getVolatility()));
-                        bind.existingRfRateNum.setText(String.valueOf(OptionUtil.riskFreeRate));
-                        bind.existingSpotPrice.setVisibility(View.VISIBLE);
-                        bind.existingVolatility.setVisibility(View.VISIBLE);
-                        bind.existingRfRate.setVisibility(View.VISIBLE);
-                    } else {
-                        Toast.makeText(activityContext, "Option entered does not exist. Please try again",
-                                Toast.LENGTH_LONG).show();
+                            queriedOption.setCurrentPrice(parsedCurrentPrice);
+                            queriedOption.setVolatility(parsedVolatility);
+
+                            String callPrice = OptionUtil.calculateCallPrice(queriedOption, activityContext);
+                            String putPrice = OptionUtil.calculatePutPrice(queriedOption);
+
+                            bind.existingCallPrice.setText(callPrice);
+                            bind.existingPutPrice.setText(putPrice);
+                            bind.existingSpotNum.setText(String.valueOf(queriedOption.getCurrentPrice()));
+                            bind.existingVolNum.setText(String.valueOf(queriedOption.getVolatility()));
+                            bind.existingRfRateNum.setText(String.valueOf(OptionUtil.riskFreeRate));
+                            bind.existingSpotPrice.setVisibility(View.VISIBLE);
+                            bind.existingVolatility.setVisibility(View.VISIBLE);
+                            bind.existingRfRate.setVisibility(View.VISIBLE);
+                        } else {
+                            Toast.makeText(activityContext, "Option entered does not exist. Please try again",
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<JsonElement> call, Throwable t) {
-                    Log.d("JSONRetrofit", "Failure!");
-                }
-            });
+                    @Override
+                    public void onFailure(Call<JsonElement> call, Throwable t) {
+                        Log.d("JSONRetrofit", "Failure!");
+                    }
+                });
 
+            } else {
+                Toast.makeText(ExistingOptionActivity.this, getString(R.string.expiration_error),
+                        Toast.LENGTH_SHORT).show();
+            }
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //hide keyboard
         } else {
-            Toast.makeText(ExistingOptionActivity.this, getString(R.string.expiration_error),
+            Toast.makeText(this, "Please enter a value for every input",
                     Toast.LENGTH_SHORT).show();
         }
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //hide keyboard
     }
 
 
